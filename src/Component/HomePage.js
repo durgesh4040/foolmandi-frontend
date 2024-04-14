@@ -13,8 +13,7 @@ export default function HomePage() {
   const [isLoading, setIsLoding] = useState(true);
   const [currentDate, setCurrentDate] = useState(new Date());
   const [data, setData] = useState([]);
-  const [error, setError] = useState(null);
-  const [search, setSearch] = useState("");
+
   const [searchQuery, setSearchQuery] = useState("");
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -41,6 +40,7 @@ export default function HomePage() {
             params: {
               page: currentPage - 1,
               limit: itemsPerPage,
+              name: searchQuery,
             },
           }
         );
@@ -55,7 +55,7 @@ export default function HomePage() {
       }
     };
     fetchData();
-  }, [currentPage, itemsPerPage]);
+  }, [currentPage, itemsPerPage, searchQuery]);
 
   const handleNextPage = () => {
     if (currentPage <= totalPages - 1) {
@@ -70,9 +70,10 @@ export default function HomePage() {
   };
 
   const handleSearch = (query) => {
+    console.log(query);
     setSearchQuery(query);
   };
-  console.log("search query", searchQuery);
+
   return (
     <div className="bg-green-50">
       <Crousel images={images} />
@@ -108,40 +109,34 @@ export default function HomePage() {
             </thead>
             <tbody>
               {data &&
-                data
-                  .filter((item) => {
-                    return search.toLowerCase() === ""
-                      ? item
-                      : item.name.toLowerCase().includes(search);
-                  })
-                  .map((item, index) => (
-                    <tr
-                      key={index}
-                      className="bg-white border-b dark:bg-white dark:border-black-700 hover:bg-green-100 dark:hover:bg-green-200"
+                data.map((item, index) => (
+                  <tr
+                    key={index}
+                    className="bg-white border-b dark:bg-white dark:border-black-700 hover:bg-green-100 dark:hover:bg-green-200"
+                  >
+                    <th
+                      scope="row"
+                      className="py-4 px-6 font-medium text-black whitespace-nowrap dark:text-white"
                     >
-                      <th
-                        scope="row"
-                        className="py-4 px-6 font-medium text-black whitespace-nowrap dark:text-white"
-                      >
-                        <div className="flex items-center space-x-3">
-                          <img
-                            src={`./images/${item.name}.jpg`}
-                            alt={item.name}
-                            className="w-10 h-10 object-cover rounded-full"
-                          />
-                          <span className="text-black">{item.name}</span>
-                        </div>
-                      </th>
-                      <td className="py-4 px-6 text-black text-center">
-                        {item.category}
-                      </td>
-                      <td className="py-4 px-6 text-black text-center">
-                        {item.qty}
-                      </td>
-                      <td className="py-4 px-6 text-black">{item.unit}</td>
-                      <td className="py-4 px-6 text-black font-bold">{`\u20B9 ${item.price}`}</td>
-                    </tr>
-                  ))}
+                      <div className="flex items-center space-x-3">
+                        <img
+                          src={`./images/${item.name}.jpg`}
+                          alt={item.name}
+                          className="w-10 h-10 object-cover rounded-full"
+                        />
+                        <span className="text-black">{item.name}</span>
+                      </div>
+                    </th>
+                    <td className="py-4 px-6 text-black text-center">
+                      {item.category}
+                    </td>
+                    <td className="py-4 px-6 text-black text-center">
+                      {item.qty}
+                    </td>
+                    <td className="py-4 px-6 text-black">{item.unit}</td>
+                    <td className="py-4 px-6 text-black font-bold">{`\u20B9 ${item.price}`}</td>
+                  </tr>
+                ))}
             </tbody>
           </table>
           <div className="flex justify-between w-full p-4">

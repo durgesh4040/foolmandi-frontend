@@ -4,6 +4,7 @@ import HomePage from "./Component/HomePage";
 import RegistrationForm from "./Component/RegistrationForm";
 import LivePrice from "./Component/LivePrice";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 function App() {
   return (
     <>
