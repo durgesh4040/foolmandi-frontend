@@ -1,8 +1,8 @@
 import Navbar from "./Component/Navbar";
-import LoginForm from "./Component/LoginForm";
 import HomePage from "./Component/HomePage";
-import RegistrationForm from "./Component/RegistrationForm";
-import LivePrice from "./Component/LivePrice";
+import RegistrationForm from "./Component/Admin/RegistrationForm";
+import LivePrice from "./Component/LivePrice/LivePrice";
+import LoginForm from "./Component/User/LoginForm";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {

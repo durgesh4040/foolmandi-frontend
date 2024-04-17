@@ -1,12 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const location = useLocation();
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
+
+  useEffect(() => {
+    console.log(location.pathname);
+  }, [location]);
 
   return (
     <nav className="bg-green-700">
@@ -29,23 +35,47 @@ const Navbar = () => {
         </div>
         <div className="hidden md:flex">
           <div className="flex space-x-4">
-            <div className="hover:border hover:border-green-500 px-3 py-2 rounded-md">
+            <div
+              className={`px-3 py-2 rounded-md ${
+                location.pathname === "/"
+                  ? " active border border-green-200"
+                  : ""
+              }`}
+            >
               <Link to="/" className="text-white">
                 Home
               </Link>
             </div>
-            <div className="hover:border hover:border-green-500 px-3 py-2 rounded-md">
+            <div
+              className={`px-3 py-2 rounded-md ${
+                location.pathname === "/login"
+                  ? " active border border-green-200"
+                  : ""
+              }`}
+            >
               <Link to="/login" className="text-white">
                 Login
               </Link>
             </div>
-            <div className="hover:border hover:border-green-500 px-3 py-2 rounded-md">
+            <div
+              className={`px-3 py-2 rounded-md ${
+                location.pathname === "/signup"
+                  ? " active border border-green-200"
+                  : ""
+              }`}
+            >
               <Link to="/signup" className="text-white">
                 Registration
               </Link>
             </div>
-            <div className="hover:border hover:border-green-500 px-3 py-2 rounded-md">
-              <Link to="/" className="text-white">
+            <div
+              className={`px-3 py-2 rounded-md ${
+                location.pathname === "/seller"
+                  ? " active border border-green-200"
+                  : ""
+              }`}
+            >
+              <Link to="/seller" className="text-white">
                 Became a Seller
               </Link>
             </div>
@@ -53,28 +83,48 @@ const Navbar = () => {
         </div>
       </div>
       {isOpen && (
-        <div className="md:hidden">
-          <div className="px-2 py-1">
-            <div className="hover:border hover:border-green-500 px-3 py-2 rounded-md">
-              <Link to="/" className="block text-white">
-                Home
-              </Link>
-            </div>
-            <div className="hover:border hover:border-green-500 px-3 py-2 rounded-md">
-              <a href="/login" className="block text-white">
-                About
-              </a>
-            </div>
-            <div className="hover:border hover:border-green-500 px-3 py-2 rounded-md">
-              <Link to="/signup" className="block text-white">
-                Registration
-              </Link>
-            </div>
-            <div className="hover:border hover:border-green-500 px-3 py-2 rounded-md">
-              <Link to="#" className="block text-white">
-                Became a Seller
-              </Link>
-            </div>
+        <div className="md:hidden fixed top-0 left-0 h-full w-1/2 bg-green-700 z-50 p-2">
+          <div
+            className={`px-3 py-2 rounded-md ${
+              location.pathname === "/" ? " active border border-green-200" : ""
+            }`}
+          >
+            <Link to="/" className="block text-white">
+              Home
+            </Link>
+          </div>
+          <div
+            className={`px-3 py-2 rounded-md ${
+              location.pathname === "/login"
+                ? " active border border-green-200"
+                : ""
+            }`}
+          >
+            <Link to="/login" className="block text-white">
+              Login
+            </Link>
+          </div>
+          <div
+            className={`px-3 py-2 rounded-md ${
+              location.pathname === "/signup"
+                ? " active border border-green-200"
+                : ""
+            }`}
+          >
+            <Link to="/signup" className="block text-white">
+              Registration
+            </Link>
+          </div>
+          <div
+            className={`px-3 py-2 rounded-md ${
+              location.pathname === "/seller"
+                ? " active border border-green-200"
+                : ""
+            }`}
+          >
+            <Link to="/seller" className="block text-white">
+              Became a Seller
+            </Link>
           </div>
         </div>
       )}

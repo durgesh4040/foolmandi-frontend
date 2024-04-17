@@ -35,7 +35,7 @@ export default function HomePage() {
         const formattedDate = Format();
         console.log(formattedDate);
         const response = await axios.get(
-          `http://localhost:8080/getPriceByDate/2024-04-12`,
+          `http://localhost:8080/getPriceByDate/2024-04-16`,
           {
             params: {
               page: currentPage - 1,
