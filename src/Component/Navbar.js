@@ -1,23 +1,51 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { useAuth } from "../Component/context/AuthContext"; // Correct the path if necessary
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
+  const { getUser, userIsAuthenticated, userLogout } = useAuth(); // Use authentication context
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
+  };
+
+  const logout = () => {
+    userLogout();
   };
 
   useEffect(() => {
     console.log(location.pathname);
   }, [location]);
 
+  const enterMenuStyle = () => {
+    return { display: "block" };
+  };
+
+  const logoutMenuStyle = () => {
+    return { display: "block" };
+  };
+
+  const adminPageStyle = () => {
+    return userIsAuthenticated ? { display: "block" } : { display: "none" };
+  };
+
+  const userPageStyle = () => {
+    return { display: "block" };
+  };
+
+  const getUserName = () => {
+    const user = getUser();
+    return user ? user.data.name : "Guest";
+  };
+
   return (
     <nav className="bg-green-700">
       <div className="flex items-center justify-between px-4 py-3">
-        <div className="text-white font-bold">Logo</div>
+        <Link to="/" className="text-white font-bold">
+          Logo
+        </Link>
         <div className="md:hidden">
           <button
             type="button"
@@ -38,7 +66,7 @@ const Navbar = () => {
             <div
               className={`px-3 py-2 rounded-md ${
                 location.pathname === "/"
-                  ? " active border border-green-200"
+                  ? "active border border-green-200"
                   : ""
               }`}
             >
@@ -48,10 +76,22 @@ const Navbar = () => {
             </div>
             <div
               className={`px-3 py-2 rounded-md ${
-                location.pathname === "/login"
-                  ? " active border border-green-200"
+                location.pathname === "/directBuy"
+                  ? "active border border-green-200"
                   : ""
               }`}
+            >
+              <Link to="/directBuy" className="block text-white">
+                DirectBuy
+              </Link>
+            </div>
+            <div
+              className={`px-3 py-2 rounded-md ${
+                location.pathname === "/login"
+                  ? "active border border-green-200"
+                  : ""
+              }`}
+              style={enterMenuStyle()}
             >
               <Link to="/login" className="text-white">
                 Login
@@ -60,23 +100,48 @@ const Navbar = () => {
             <div
               className={`px-3 py-2 rounded-md ${
                 location.pathname === "/signup"
-                  ? " active border border-green-200"
+                  ? "active border border-green-200"
                   : ""
               }`}
+              style={enterMenuStyle()}
             >
               <Link to="/signup" className="text-white">
-                Registration
+                SignUp
               </Link>
             </div>
             <div
               className={`px-3 py-2 rounded-md ${
                 location.pathname === "/seller"
-                  ? " active border border-green-200"
+                  ? "active border border-green-200"
                   : ""
               }`}
+              style={userPageStyle()} // Show for authenticated users only
             >
-              <Link to="/seller" className="text-white">
-                Became a Seller
+              <Link to="/becameseller" className="text-white">
+                Become a Seller
+              </Link>
+            </div>
+            <div
+              className={`px-3 py-2 rounded-md ${
+                location.pathname === "/adminpage"
+                  ? "active border border-green-200"
+                  : ""
+              }`}
+              style={adminPageStyle()} // Show for admin users only
+            >
+              <Link to="/adminpage" className="text-white">
+                AdminPage
+              </Link>
+            </div>
+            <div
+              className="px-3 py-2 rounded-md text-white"
+              style={logoutMenuStyle()}
+            >
+              {` ${getUserName()}`}
+            </div>
+            <div className="px-3 py-2 rounded-md" style={logoutMenuStyle()}>
+              <Link to="/" className="text-white" onClick={logout}>
+                Logout
               </Link>
             </div>
           </div>
@@ -86,7 +151,7 @@ const Navbar = () => {
         <div className="md:hidden fixed top-0 left-0 h-full w-1/2 bg-green-700 z-50 p-2">
           <div
             className={`px-3 py-2 rounded-md ${
-              location.pathname === "/" ? " active border border-green-200" : ""
+              location.pathname === "/" ? "active border border-green-200" : ""
             }`}
           >
             <Link to="/" className="block text-white">
@@ -95,10 +160,22 @@ const Navbar = () => {
           </div>
           <div
             className={`px-3 py-2 rounded-md ${
-              location.pathname === "/login"
-                ? " active border border-green-200"
+              location.pathname === "/directBuy"
+                ? "active border border-green-200"
                 : ""
             }`}
+          >
+            <Link to="/directBuy" className="block text-white">
+              DirectBuy
+            </Link>
+          </div>
+          <div
+            className={`px-3 py-2 rounded-md ${
+              location.pathname === "/login"
+                ? "active border border-green-200"
+                : ""
+            }`}
+            style={enterMenuStyle()}
           >
             <Link to="/login" className="block text-white">
               Login
@@ -107,23 +184,48 @@ const Navbar = () => {
           <div
             className={`px-3 py-2 rounded-md ${
               location.pathname === "/signup"
-                ? " active border border-green-200"
+                ? "active border border-green-200"
                 : ""
             }`}
+            style={enterMenuStyle()}
           >
             <Link to="/signup" className="block text-white">
-              Registration
+              SignUp
             </Link>
           </div>
           <div
             className={`px-3 py-2 rounded-md ${
               location.pathname === "/seller"
-                ? " active border border-green-200"
+                ? "active border border-green-200"
                 : ""
             }`}
+            style={userPageStyle()} // Show for authenticated users only
           >
-            <Link to="/seller" className="block text-white">
-              Became a Seller
+            <Link to="/becameseller" className="block text-white">
+              Become a Seller
+            </Link>
+          </div>
+          <div
+            className={`px-3 py-2 rounded-md ${
+              location.pathname === "/adminpage"
+                ? "active border border-green-200"
+                : ""
+            }`}
+            style={adminPageStyle()} // Show for admin users only
+          >
+            <Link to="/adminpage" className="block text-white">
+              AdminPage
+            </Link>
+          </div>
+          <div
+            className="px-3 py-2 rounded-md text-white"
+            style={logoutMenuStyle()}
+          >
+            {` ${getUserName()}`}
+          </div>
+          <div className="px-3 py-2 rounded-md" style={logoutMenuStyle()}>
+            <Link to="/" className="block text-white" onClick={logout}>
+              Logout
             </Link>
           </div>
         </div>
