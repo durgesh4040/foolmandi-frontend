@@ -8,11 +8,6 @@ const Search = ({ onSearch }) => {
     onSearch(query);
   };
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   onSearch(query);
-  // };
-
   return (
     <div className="relative">
       <input
