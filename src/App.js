@@ -12,6 +12,7 @@ import EnquiryForm from "./Component/Seller/EnquiryForm";
 import Signup from "./Component/home/Signup";
 import SellerForm from "./Component/Seller/SellerForm";
 import PrivateRoute from "./Component/misc/PrivateRoute";
+import ProductList from "./Component/Seller/ProductList";
 
 function App() {
   return (
@@ -26,11 +27,20 @@ function App() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/oauth2/redirect" element={<OAuth2Redirect />} />
             <Route path="/livePrice" element={<LivePrice />} />
+
             <Route
               path="/enquiryform"
               element={
                 <PrivateRoute>
-                  <EnquiryForm />{" "}
+                  <EnquiryForm />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/productlist"
+              element={
+                <PrivateRoute>
+                  <ProductList />
                 </PrivateRoute>
               }
             />

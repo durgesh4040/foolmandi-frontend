@@ -3,7 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { liveflowerPrice } from "../misc/LiveFlowerPrice";
 
 const SellerData = () => {
-  const [sellerdata, setSellerData] = useState([]);
+  const [sellerData, setSellerData] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -18,14 +19,14 @@ const SellerData = () => {
     fetchData();
   }, []);
 
-  // function goToEnquiryForm(email) {
-  //   navigate("/enquiryform", { state: { email: email } });
-  // }
+  const handleGetBestPrice = (seller) => {
+    navigate("/productlist", { state: { sellerEmail: seller.email } });
+  };
 
   return (
     <div className="flex flex-col items-center min-h-screen bg-green-50">
-      {sellerdata.length > 0 ? (
-        sellerdata.map((seller, index) => (
+      {sellerData.length > 0 ? (
+        sellerData.map((seller, index) => (
           <div
             key={index}
             className="flex flex-col w-full md:w-2/3 lg:w-1/2 xl:w-1/3 m-4 h-auto rounded overflow-hidden shadow-lg bg-white border border-green-500"
@@ -44,7 +45,6 @@ const SellerData = () => {
                 <strong>Address:</strong> {seller.address}
               </p>
               <div className="flex justify-center space-x-4 mt-4">
-                {/* Pass seller email as state to EnquiryForm */}
                 <Link
                   to={"/enquiryform"}
                   state={{ sellerEmail: seller.email }}
@@ -52,8 +52,10 @@ const SellerData = () => {
                 >
                   Enquiry
                 </Link>
-
-                <button className="bg-green-700 text-white font-bold py-2 px-4 rounded">
+                <button
+                  onClick={() => handleGetBestPrice(seller)}
+                  className="bg-green-700 text-white font-bold py-2 px-4 rounded"
+                >
                   Get Best Price
                 </button>
               </div>

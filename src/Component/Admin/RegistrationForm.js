@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { parseJwt, handleLogError } from "../misc/Helpers";
 import { liveflowerPrice } from "../misc/LiveFlowerPrice";
 import { useAuth } from "../context/AuthContext";
+
 const RegistrationForm = () => {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
@@ -28,7 +29,6 @@ const RegistrationForm = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    // Handle form submission, e.g., sending data to a server
 
     if (!(userName && password && name && email)) {
       setIsError(true);
@@ -65,97 +65,85 @@ const RegistrationForm = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-green-50">
-      <div
-        className="max-w-md w-full space-y-8 p-10 bg-white rounded-xl 
-       shadow-lg z-10"
-      >
-        <form
-          onSubmit={handleSubmit}
-          className="bg-white mt-8 p-6 space-y-6 rounded-lg shadow-lg"
-        >
-          <h2 className="text-2xl font-bold mb-4 text-center text-green-700">
-            Registration Form
-          </h2>
-          <div className="mb-4">
-            <label
-              htmlFor="username"
-              className="block text-green-700 text-sm font-bold mb-2"
-            >
-              Username:
-            </label>
-            <input
-              type="text"
-              id="username"
-              name="username"
-              value={userName}
-              onChange={handleInputChange}
-              required
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            />
-          </div>
-          <div className="mb-4">
-            <label
-              htmlFor="password"
-              className="block text-green-700 text-sm font-bold mb-2"
-            >
-              Password:
-            </label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              value={password}
-              onChange={handleInputChange}
-              required
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            />
-          </div>
-          <div className="mb-4">
-            <label
-              htmlFor="name"
-              className="block text-green-700 text-sm font-bold mb-2"
-            >
-              Name:
-            </label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              value={name}
-              onChange={handleInputChange}
-              required
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            />
-          </div>
-          <div className="mb-4">
-            <label
-              htmlFor="email"
-              className="block text-green-700 text-sm font-bold mb-2"
-            >
-              Email:
-            </label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={email}
-              onChange={handleInputChange}
-              required
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            />
-          </div>
+    <div className="min-h-screen flex items-center  bg-green-50">
+      <form onSubmit={handleSubmit}>
+        <h2 className="text-2xl font-bold mb-4 text-center text-green-700">
+          Registration Form
+        </h2>
 
-          <div className="flex justify-center">
-            <button
-              type="submit"
-              className="bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            >
-              Submit
-            </button>
-          </div>
-        </form>
-      </div>
+        <label
+          htmlFor="username"
+          className="block text-green-700 text-sm font-bold mb-2"
+        >
+          Username:
+        </label>
+        <input
+          type="text"
+          id="username"
+          name="username"
+          value={userName}
+          onChange={handleInputChange}
+          required
+          className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm"
+          placeholder="Username"
+        />
+
+        <label
+          htmlFor="password"
+          className="block text-green-700 text-sm font-bold mb-2"
+        >
+          Password:
+        </label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          value={password}
+          onChange={handleInputChange}
+          required
+          className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-green-500 focus:border-green-500"
+        />
+        <label
+          htmlFor="name"
+          className="block text-green-700 text-sm font-bold mb-2"
+        >
+          Name:
+        </label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          value={name}
+          onChange={handleInputChange}
+          required
+          className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-green-500 focus:border-green-500"
+        />
+
+        <label
+          htmlFor="email"
+          className="block text-green-700 text-sm font-bold mb-2"
+        >
+          Email:
+        </label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          value={email}
+          onChange={handleInputChange}
+          required
+          className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-green-500 focus:border-green-500"
+        />
+
+        <div className="flex justify-center">
+          <button
+            type="submit"
+            className="bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-green-500"
+          >
+            Submit
+          </button>
+        </div>
+      </form>
     </div>
   );
 };

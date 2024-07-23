@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-
 import { liveflowerPrice } from "../misc/LiveFlowerPrice";
-
 import { Navigate } from "react-router";
 
 const SellerForm = () => {
@@ -11,7 +9,9 @@ const SellerForm = () => {
   const [companyName, setCompanyName] = useState("");
   const [address, setAddress] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [products, setProducts] = useState([{ productName: "", price: "" }]);
+  const [products, setProducts] = useState([
+    { productName: "", price: "", image: null, imagePreview: "" },
+  ]);
   const [isError, setIsError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoggedIn, setisLoggedIn] = useState(false);
@@ -25,7 +25,6 @@ const SellerForm = () => {
       case "password":
         setPassword(value);
         break;
-
       case "email":
         setEmail(value);
         break;
@@ -44,21 +43,26 @@ const SellerForm = () => {
   };
 
   const handleProductChange = (index, e) => {
-    const { name, value } = e.target;
+    const { name, value, files } = e.target;
     const newProducts = [...products];
-    newProducts[index][name] = value;
+    if (name === "image") {
+      newProducts[index][name] = files[0];
+      newProducts[index]["imagePreview"] = URL.createObjectURL(files[0]);
+    } else {
+      newProducts[index][name] = value;
+    }
     setProducts(newProducts);
   };
 
   const addProduct = () => {
-    setProducts([...products, { productName: "", price: "" }]);
+    setProducts([
+      ...products,
+      { productName: "", price: "", image: null, imagePreview: "" },
+    ]);
   };
 
   const handleSubmit = async (event) => {
-    console.log("hi");
     event.preventDefault();
-    // Handle form submission, e.g., sending data to a server
-
     if (
       !(username && password && email && companyName && address && phoneNumber)
     ) {
@@ -67,33 +71,54 @@ const SellerForm = () => {
       return;
     }
 
-    const seller = {
-      username,
-      password,
-      email,
-      companyName,
-      address,
-      phoneNumber,
-      products,
-    };
+    // const seller = {
+    //   username,
+    //   password,
+    //   email,
+    //   companyName,
+    //   address,
+    //   phoneNumber,
+    //   products: products.map((product) => ({
+    //     productName: product.productName,
+    //     price: product.price,
+    //     image: product.image,
+    //   })),
+    // };
+
+    const seller = new FormData();
+    seller.append("username", username);
+    seller.append("password", password);
+    seller.append("email", email);
+    seller.append("companyName", companyName);
+    seller.append("address", address);
+    seller.append("phoneNumber", phoneNumber);
+
+    products.forEach((product, index) => {
+      seller.append("productNames", product.productName);
+      seller.append("productPrices", product.price);
+      if (product.image) {
+        seller.append("products", product.image);
+      }
+    });
+
     try {
       console.log(seller);
       const response = await liveflowerPrice.saveSeller(seller);
-      console.log(response);
-      console.log("hi", seller);
-      console.log(response);
       setisLoggedIn(true);
       setUserName("");
       setPassword("");
-
       setEmail("");
       setCompanyName("");
       setAddress("");
       setPhoneNumber("");
-      setProducts([{ productName: "", price: "" }]);
+      setProducts([
+        { productName: "", price: "", image: null, imagePreview: "" },
+      ]);
       setIsError(false);
       setErrorMessage("");
-    } catch (error) {}
+    } catch (error) {
+      // handle error here
+    }
   };
 
   if (isLoggedIn) {
@@ -125,7 +150,7 @@ const SellerForm = () => {
               onChange={handleInputChange}
               placeholder="Username"
               required
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2  focus:ring-green-500 focus:border-green-500 focus:shadow-outline"
             />
           </div>
           <div className="mb-4">
@@ -143,7 +168,7 @@ const SellerForm = () => {
               onChange={handleInputChange}
               placeholder="Password"
               required
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-green-500 focus:shadow-outline"
             />
           </div>
 
@@ -162,7 +187,7 @@ const SellerForm = () => {
               onChange={handleInputChange}
               placeholder="Email"
               required
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-green-500 focus:shadow-outline"
             />
           </div>
           <div className="mb-4">
@@ -180,7 +205,7 @@ const SellerForm = () => {
               onChange={handleInputChange}
               placeholder="Company Name"
               required
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-green-500 focus:shadow-outline"
             />
           </div>
           <div className="mb-4">
@@ -198,7 +223,7 @@ const SellerForm = () => {
               onChange={handleInputChange}
               placeholder="Address"
               required
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-green-500 focus:shadow-outline"
             />
           </div>
           <div className="mb-4">
@@ -216,7 +241,7 @@ const SellerForm = () => {
               onChange={handleInputChange}
               placeholder="Phone Number"
               required
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-green-500 focus:shadow-outline"
             />
           </div>
           <div className="mb-4">
@@ -224,33 +249,56 @@ const SellerForm = () => {
               Products:
             </label>
             {products.map((product, index) => (
-              <div key={index} className="flex space-x-2 mb-2">
-                <input
-                  type="text"
-                  name="productName"
-                  value={product.productName}
-                  onChange={(e) => handleProductChange(index, e)}
-                  placeholder="Product Name"
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                />
-                <input
-                  type="number"
-                  name="price"
-                  value={product.price}
-                  onChange={(e) => handleProductChange(index, e)}
-                  placeholder="Price"
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                />
+              <div key={index} className="mb-4">
+                <div className="flex space-x-2 mb-2">
+                  <input
+                    type="text"
+                    name="productName"
+                    value={product.productName}
+                    onChange={(e) => handleProductChange(index, e)}
+                    placeholder="Product Name"
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-green-500 focus:shadow-outline"
+                  />
+                  <input
+                    type="number"
+                    name="price"
+                    value={product.price}
+                    onChange={(e) => handleProductChange(index, e)}
+                    placeholder="Price"
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-green-500 focus:shadow-outline"
+                  />
+                </div>
+                <div className="flex space-x-2 mb-2">
+                  <input
+                    type="file"
+                    name="image"
+                    accept="image/*"
+                    onChange={(e) => handleProductChange(index, e)}
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-green-500 focus:shadow-outline"
+                  />
+                </div>
+                {product.imagePreview && (
+                  <div className="mb-2">
+                    <img
+                      src={product.imagePreview}
+                      alt="Product Preview"
+                      className="w-32 h-32 object-cover"
+                    />
+                  </div>
+                )}
               </div>
             ))}
             <button
               type="button"
               onClick={addProduct}
-              className="bg-green-700 hover:bg-green-900 text-white  item-center font-bold my-2 py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              className="bg-green-700 hover:bg-green-900 text-white font-bold my-2 py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             >
               Add Product
             </button>
           </div>
+          {isError && (
+            <div className="text-red-500 text-sm mb-4">{errorMessage}</div>
+          )}
           <div className="flex justify-center">
             <button
               type="submit"

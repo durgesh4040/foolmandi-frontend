@@ -16,6 +16,7 @@ export const liveflowerPrice = {
   allData,
   saveSeller,
   findAllSellerData,
+  findSellerByEmail,
   enquiryData,
 };
 
@@ -43,6 +44,10 @@ function enquiryData(enquiry, user) {
     },
   });
 }
+
+function findSellerByEmail(email) {
+  return instance.get(`/public/findSellerByEmail/${email}`);
+}
 function allData(page, size) {
   return instance.get(`/public/getData?page=${page}&size=${size}`);
 }
@@ -56,7 +61,7 @@ function getDataByDate() {
 
 function saveSeller(seller) {
   return instance.post("/public/seller", seller, {
-    headers: { "Content-type": "application/json" },
+    headers: { "Content-type": "mutipart/form-data" },
   });
 }
 function numberOfUsers() {
