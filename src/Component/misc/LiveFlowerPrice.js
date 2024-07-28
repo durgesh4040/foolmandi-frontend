@@ -18,6 +18,9 @@ export const liveflowerPrice = {
   findAllSellerData,
   findSellerByEmail,
   enquiryData,
+  sendOtp,
+  verifyOtp,
+  getDataByDate,
 };
 
 function authenticate(username, password) {
@@ -34,6 +37,27 @@ function signup(user) {
   return instance.post("/auth/signup", user, {
     headers: { "Content-type": "application/json" },
   });
+}
+
+function sendOtp(email) {
+  return instance.post(
+    `/public/sendOtp?email=${encodeURIComponent(email)}`,
+    null,
+    {
+      headers: { "Content-type": "application/json" },
+    }
+  );
+}
+function verifyOtp(email, otp) {
+  return instance.post(
+    `/public/verifyOtp?email=${encodeURIComponent(
+      email
+    )}&otp=${encodeURIComponent(otp)}`,
+    null,
+    {
+      headers: { "Content-type": "application/json" },
+    }
+  );
 }
 
 function enquiryData(enquiry, user) {

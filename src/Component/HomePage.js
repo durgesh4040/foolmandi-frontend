@@ -30,7 +30,7 @@ export default function HomePage() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8080/public/getPriceByDate/2024-07-03",
+          "http://www.phoolmandi.in:8080/public/getPriceByDate/2024-07-25",
           {
             params: {
               page: page,

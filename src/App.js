@@ -9,12 +9,16 @@ import OAuth2Redirect from "./Component/home/OAuth2Redirect";
 import { Navigate } from "react-router-dom";
 import SellerData from "./Component/Seller/SellerData";
 import EnquiryForm from "./Component/Seller/EnquiryForm";
-import Signup from "./Component/home/Signup";
+import Signup from "./Component/User/Signup";
 import SellerForm from "./Component/Seller/SellerForm";
 import PrivateRoute from "./Component/misc/PrivateRoute";
 import ProductList from "./Component/Seller/ProductList";
+import EmailVerification from "./Component/Seller/EmailVerification";
 
+import { useState } from "react";
+import "./App.css";
 function App() {
+  const [verifiedEmail, setVerifiedEmail] = useState("");
   return (
     <>
       <AuthProvider>
@@ -29,6 +33,17 @@ function App() {
             <Route path="/livePrice" element={<LivePrice />} />
 
             <Route
+              path="//becameseller"
+              element={
+                verifiedEmail ? (
+                  <SellerForm verifiedEmail={verifiedEmail} />
+                ) : (
+                  <EmailVerification setVerifiedEmail={setVerifiedEmail} />
+                )
+              }
+            />
+
+            <Route
               path="/enquiryform"
               element={
                 <PrivateRoute>
@@ -36,15 +51,8 @@ function App() {
                 </PrivateRoute>
               }
             />
-            <Route
-              path="/productlist"
-              element={
-                <PrivateRoute>
-                  <ProductList />
-                </PrivateRoute>
-              }
-            />
-            <Route path="/becameseller" element={<SellerForm />} />
+            <Route path="/productlist" element={<ProductList />} />
+            {/* <Route path="/becameseller" element={<SellerForm />} /> */}
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </BrowserRouter>

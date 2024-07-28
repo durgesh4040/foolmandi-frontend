@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../Component/context/AuthContext"; // Correct the path if necessary
+import CrossButton from "./CrossButton";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -44,7 +45,7 @@ const Navbar = () => {
     <nav className="bg-green-700">
       <div className="flex items-center justify-between px-4 py-3">
         <Link to="/" className="text-white font-bold">
-          Logo
+          <h1> PhoolMandi</h1>
         </Link>
         <div className="md:hidden">
           <button
@@ -127,14 +128,14 @@ const Navbar = () => {
                   ? "active border border-green-200"
                   : ""
               }`}
-              style={adminPageStyle()} // Show for admin users only
+              style={adminPageStyle()}
             >
               <Link to="/adminpage" className="text-white">
                 AdminPage
               </Link>
             </div>
             <div
-              className="px-3 py-2 rounded-md text-white"
+              className="px-3 py-2 rounded-md font-bold text-white"
               style={logoutMenuStyle()}
             >
               {` ${getUserName()}`}
@@ -149,6 +150,7 @@ const Navbar = () => {
       </div>
       {isOpen && (
         <div className="md:hidden fixed top-0 left-0 h-full w-1/2 bg-green-700 z-50 p-2">
+          <CrossButton onClick={toggleMenu} />
           <div
             className={`px-3 py-2 rounded-md ${
               location.pathname === "/" ? "active border border-green-200" : ""

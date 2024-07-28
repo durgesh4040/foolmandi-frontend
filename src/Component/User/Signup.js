@@ -112,8 +112,8 @@ const Signup = () => {
               value={username}
               onChange={handleInputChange}
               placeholder="Username"
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2  focus:ring-green-500 focus:border-green-500 focus:shadow-outline"
               required
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
           </div>
           <div className="mb-4">
@@ -132,7 +132,7 @@ const Signup = () => {
                 onChange={handleInputChange}
                 placeholder="Password"
                 required
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline pr-10"
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2  focus:ring-green-500 focus:border-green-500 focus:shadow-outline"
               />
               <span
                 onClick={handleToggle}
@@ -157,7 +157,7 @@ const Signup = () => {
               onChange={handleInputChange}
               placeholder="Name"
               required
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2  focus:ring-green-500 focus:border-green-500 focus:shadow-outline"
             />
           </div>
           <div className="mb-4">
@@ -175,7 +175,7 @@ const Signup = () => {
               onChange={handleInputChange}
               placeholder="Email"
               required
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2  focus:ring-green-500 focus:border-green-500 focus:shadow-outline"
             />
           </div>
           <div className="flex justify-center">

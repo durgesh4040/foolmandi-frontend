@@ -84,8 +84,8 @@ const RegistrationForm = () => {
           value={userName}
           onChange={handleInputChange}
           required
-          className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm"
           placeholder="Username"
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2  focus:ring-green-500 focus:border-green-500 focus:shadow-outline"
         />
 
         <label
@@ -101,8 +101,9 @@ const RegistrationForm = () => {
           value={password}
           onChange={handleInputChange}
           required
-          className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-green-500 focus:border-green-500"
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2  focus:ring-green-500 focus:border-green-500 focus:shadow-outline"
         />
+
         <label
           htmlFor="name"
           className="block text-green-700 text-sm font-bold mb-2"
@@ -116,7 +117,7 @@ const RegistrationForm = () => {
           value={name}
           onChange={handleInputChange}
           required
-          className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-green-500 focus:border-green-500"
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2  focus:ring-green-500 focus:border-green-500 focus:shadow-outline"
         />
 
         <label
@@ -132,7 +133,7 @@ const RegistrationForm = () => {
           value={email}
           onChange={handleInputChange}
           required
-          className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-green-500 focus:border-green-500"
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2  focus:ring-green-500 focus:border-green-500 focus:shadow-outline"
         />
 
         <div className="flex justify-center">
