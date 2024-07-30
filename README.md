@@ -1,70 +1,66 @@
-# Getting Started with Create React App
+# PhoolMandi WebApp
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+[Live](http://www.phoolmandi.in/)
 
-## Available Scripts
+PhoolMandi is a real-world web application designed to enable flower vendors to create online shops and increase sales through direct customer purchases and discounts. The application is hosted on AWS EC2, providing a robust and scalable platform for users.
 
-In the project directory, you can run:
+## Technologies Utilized
 
-### `npm start`
+- **Spring Boot**
+- **MongoDB**
+- **React.js**
+- **OAuth2**
+- **JWT**
+- **Gmail API**
+- **Gmail OTP Verification**
+- **AWS EC2**
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Features
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Online Shops for Flower Vendors
+PhoolMandi allows flower vendors to easily set up their online shops, providing a platform to display their products and manage sales.
 
-### `npm test`
+![Online Shops](path/to/online-shops-image.jpg)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Customer Purchases and Discounts
+Customers can browse through various flower shops, make purchases, and avail discounts directly through the platform.
 
-### `npm run build`
+![Customer Purchases](path/to/customer-purchases-image.jpg)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Customer Inquiries
+The app includes features for handling customer inquiries, ensuring vendors can respond to questions and provide support efficiently.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+![Customer Inquiries](path/to/customer-inquiries-image.jpg)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Streamlined Buying Process
+Implemented interactive and user-centric features using React.js, streamlining the buying process and enhancing overall user experience.
 
-### `npm run eject`
+![Buying Process](path/to/buying-process-image.jpg)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Database Management
+Managed and optimized databases using MongoDB to ensure data efficiency and reliability.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+![Database Management](path/to/database-management-image.jpg)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Security and Authentication
+Utilized OAuth2 and JWT for secure user authentication, along with Gmail API and Gmail OTP Verification for enhanced security.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+![Security and Authentication](path/to/security-authentication-image.jpg)
 
-## Learn More
+### Launch-Phase Bug Fixes
+Actively addressed and resolved launch-phase bugs to maintain a seamless and functional platform.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+![Bug Fixes](path/to/bug-fixes-image.jpg)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Login and Logout
+Implemented a secure login and logout system using OAuth2 and JWT, ensuring safe access to user accounts.
 
-### Code Splitting
+![Login](path/to/login-image.jpg)
+![Logout](path/to/logout-image.jpg)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Deployment
 
-### Analyzing the Bundle Size
+PhoolMandi is deployed on AWS EC2, providing a scalable and reliable environment for the application.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+![AWS EC2 Deployment](path/to/aws-ec2-deployment-image.jpg)
 
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
