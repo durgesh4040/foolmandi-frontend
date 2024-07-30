@@ -22,36 +22,30 @@ PhoolMandi allows flower vendors to easily set up their online shops, providing 
 
 ### Customer Purchases and Discounts
 Customers can browse through various flower shops, make purchases, and avail discounts directly through the platform.
-
-![Online Shops](public/images/shoplistbyowner.png)
+![product_owner](public/images/home.png)
+![product_owner](public/images/shop.png)
+![Online Shops](public/images/productlist.png)
 ### Customer Inquiries
 The app includes features for handling customer inquiries, ensuring vendors can respond to questions and provide support efficiently.
 
 ![Customer Inquiries](public/images/enquiryform.png)
 
-
-
 ### Database Management
 Managed and optimized databases using MongoDB to ensure data efficiency and reliability.
 
-
-
-### Security and Authentication
+## Security and Authentication
 Utilized OAuth2 and JWT for secure user authentication, along with Gmail API and Gmail OTP Verification for enhanced security.
 
 ![Security and Authentication]()
-![email-verification](https://github.com/durgesh4040/foolmandi-frontend/blob/be0287bb49f6675e67f16c47e5828ddc53a5448d/public/images/enquiryform.png)
-![verigy-otp](https://github.com/durgesh4040/foolmandi-frontend/blob/d8cff69b3cbe4540d084d115c9d2b9231458f209/public/images/Screenshot%202024-07-30%20234023.png)
-
+![email-verification](public/images/email-verification.png)
+![verigy-otp](public/images/verify-otp.png)
 
 ### Login and Logout
 Implemented a secure login and logout system using OAuth2 and JWT, ensuring safe access to user accounts.
-![Login](public/images/enquiryform.png)
-![Login](https://github.com/durgesh4040/foolmandi-frontend/blob/d8cff69b3cbe4540d084d115c9d2b9231458f209/public/images/www.phoolmandi.in_login(Pixel%207).png)
+![Login](public/images/login.png)
 
-![google-oauth2](https://github.com/durgesh4040/foolmandi-frontend/blob/d8cff69b3cbe4540d084d115c9d2b9231458f209/public/images/Screenshot%202024-07-30%20233910.png)
+![google-oauth2](public/images/signup.png)
 ## Deployment
-
 PhoolMandi is deployed on AWS EC2, providing a scalable and reliable environment for the application.
 
 
