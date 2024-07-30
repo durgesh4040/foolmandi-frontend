@@ -34,7 +34,7 @@ const ProductList = () => {
   }
 
   return (
-    <div className="flex flex-col items-center min-h-screen bg-green-50 p-6">
+    <div className="flex flex-col mt-2 items-center min-h-screen bg-green-50 p-6">
       {seller && (
         <div className="flex flex-col w-full">
           <div className="bg-green-700 text-white text-center py-4 mb-6">

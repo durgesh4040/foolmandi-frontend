@@ -24,12 +24,12 @@ const SellerData = () => {
   };
 
   return (
-    <div className="flex flex-col items-center min-h-screen bg-green-50">
+    <div className="flex flex-col mt-2 items-center min-h-screen bg-green-50 px-4 sm:px-6 lg:px-8">
       {sellerData.length > 0 ? (
         sellerData.map((seller, index) => (
           <div
             key={index}
-            className="flex flex-col w-full md:w-2/3 lg:w-1/2 xl:w-1/3 m-4 h-auto rounded overflow-hidden shadow-lg bg-white border border-green-500"
+            className="flex flex-col w-full sm:w-3/4 md:w-2/3 lg:w-1/2 xl:w-1/3 mb-4 p-4 rounded overflow-hidden shadow-lg bg-white border border-green-500"
           >
             <div className="px-6 py-4">
               <div className="font-bold text-xl mb-2 text-white bg-green-700 p-2 rounded text-center">
@@ -44,11 +44,11 @@ const SellerData = () => {
               <p className="text-black text-base">
                 <strong>Address:</strong> {seller.address}
               </p>
-              <div className="flex justify-center space-x-4 mt-4">
+              <div className="flex flex-col sm:flex-row justify-center space-y-2 sm:space-y-0 sm:space-x-4 mt-4">
                 <Link
                   to={"/enquiryform"}
                   state={{ sellerEmail: seller.email }}
-                  className="bg-green-700 text-white font-bold py-2 px-4 rounded"
+                  className="bg-green-700 text-white font-bold py-2 px-4 rounded text-center"
                 >
                   Enquiry
                 </Link>
@@ -56,7 +56,7 @@ const SellerData = () => {
                   onClick={() => handleGetBestPrice(seller)}
                   className="bg-green-700 text-white font-bold py-2 px-4 rounded"
                 >
-                  Get Best Price
+                  View Product
                 </button>
               </div>
             </div>

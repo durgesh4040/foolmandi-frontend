@@ -7,9 +7,9 @@ import { handleLogError } from "../Component/misc/Helpers";
 
 export default function HomePage() {
   const images = [
-    "./images/Rose.jpg",
-    "./images/Gerbera.jpg",
-    "./images/Titus.jpg",
+    "./images/Rose.webp",
+    "./images/Gerbera.webp",
+    "./images/Titus.webp",
   ];
   const [isLoading, setIsLoading] = useState(true);
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -123,7 +123,7 @@ export default function HomePage() {
                       >
                         <div className="flex items-center space-x-3">
                           <img
-                            src={`./images/${item.name}.jpg`}
+                            src={`./images/${item.name}.webp`}
                             alt={item.name}
                             className="w-10 h-10 object-cover rounded-full"
                           />

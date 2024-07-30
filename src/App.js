@@ -14,7 +14,7 @@ import SellerForm from "./Component/Seller/SellerForm";
 import PrivateRoute from "./Component/misc/PrivateRoute";
 import ProductList from "./Component/Seller/ProductList";
 import EmailVerification from "./Component/Seller/EmailVerification";
-
+import Footer from "./Component/Footer";
 import { useState } from "react";
 import "./App.css";
 function App() {
@@ -33,7 +33,7 @@ function App() {
             <Route path="/livePrice" element={<LivePrice />} />
 
             <Route
-              path="//becameseller"
+              path="/becameseller"
               element={
                 verifiedEmail ? (
                   <SellerForm verifiedEmail={verifiedEmail} />
@@ -55,6 +55,7 @@ function App() {
             {/* <Route path="/becameseller" element={<SellerForm />} /> */}
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
+          <Footer />
         </BrowserRouter>
       </AuthProvider>
     </>

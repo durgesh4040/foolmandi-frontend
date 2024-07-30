@@ -7,16 +7,14 @@
 
 // const dev = {
 //   url: {
-//     API_BASE_URL: "http://localhost:8080",
-//     OAUTH2_REDIRECT_URI: "http://localhost:3000/oauth2/redirect",
+//     API_BASE_URL: "http://www.phoolmandi.in:8080",
+//     OAUTH2_REDIRECT_URI: "http://www.phoolmandi.in/oauth2/redirect",
 //   },
 // };
-
 const dev = {
   url: {
-    API_BASE_URL: "http://www.phoolmandi.in:8080",
-    OAUTH2_REDIRECT_URI: "http://www.phoolmandi.in/oauth2/redirect",
+    API_BASE_URL: "http://localhost:8080",
+    OAUTH2_REDIRECT_URI: "http://localhost:3000/oauth2/redirect",
   },
 };
-
 export const config = process.env.NODE_ENV === "development" ? dev : dev;

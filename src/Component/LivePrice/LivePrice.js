@@ -68,7 +68,7 @@ function LivePrice() {
     e.preventDefault();
     console.log(products);
     const response = await axios.post(
-      "http://localhost:16.170.98.46/public/admin/Price",
+      "http://www.phoolmandi.in:8080/public/admin/Price",
       products,
       {
         headers: {
