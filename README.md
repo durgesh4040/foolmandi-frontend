@@ -40,7 +40,7 @@ Managed and optimized databases using MongoDB to ensure data efficiency and reli
 Utilized OAuth2 and JWT for secure user authentication, along with Gmail API and Gmail OTP Verification for enhanced security.
 
 ![Security and Authentication]()
-![email-verification](public/images/email.png)
+![email-verification](https://github.com/durgesh4040/foolmandi-frontend/blob/be0287bb49f6675e67f16c47e5828ddc53a5448d/public/images/enquiryform.png)
 ![verigy-otp](https://github.com/durgesh4040/foolmandi-frontend/blob/d8cff69b3cbe4540d084d115c9d2b9231458f209/public/images/Screenshot%202024-07-30%20234023.png)
 
 
