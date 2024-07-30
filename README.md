@@ -20,47 +20,40 @@ PhoolMandi is a real-world web application designed to enable flower vendors to 
 ### Online Shops for Flower Vendors
 PhoolMandi allows flower vendors to easily set up their online shops, providing a platform to display their products and manage sales.
 
-![Online Shops](path/to/online-shops-image.jpg)
+![Online Shops](public/images/shoplistbyowner.png)
 
 ### Customer Purchases and Discounts
 Customers can browse through various flower shops, make purchases, and avail discounts directly through the platform.
 
-![Customer Purchases](path/to/customer-purchases-image.jpg)
+![Customer Purchases](public/images/email.png)
 
 ### Customer Inquiries
 The app includes features for handling customer inquiries, ensuring vendors can respond to questions and provide support efficiently.
 
-![Customer Inquiries](path/to/customer-inquiries-image.jpg)
+![Customer Inquiries](public/images/enquiryform.png)
 
-### Streamlined Buying Process
-Implemented interactive and user-centric features using React.js, streamlining the buying process and enhancing overall user experience.
 
-![Buying Process](path/to/buying-process-image.jpg)
 
 ### Database Management
 Managed and optimized databases using MongoDB to ensure data efficiency and reliability.
 
-![Database Management](path/to/database-management-image.jpg)
+
 
 ### Security and Authentication
 Utilized OAuth2 and JWT for secure user authentication, along with Gmail API and Gmail OTP Verification for enhanced security.
 
-![Security and Authentication](path/to/security-authentication-image.jpg)
+![Security and Authentication]()
 
-### Launch-Phase Bug Fixes
-Actively addressed and resolved launch-phase bugs to maintain a seamless and functional platform.
 
-![Bug Fixes](path/to/bug-fixes-image.jpg)
 
 ### Login and Logout
 Implemented a secure login and logout system using OAuth2 and JWT, ensuring safe access to user accounts.
 
-![Login](path/to/login-image.jpg)
-![Logout](path/to/logout-image.jpg)
-
+![Login](public/images/www.phoolmandi.in_login(Pixel 7).png)
+![google oauth page](public/images/Screenshot 2024-07-30 233910.png)
 ## Deployment
 
 PhoolMandi is deployed on AWS EC2, providing a scalable and reliable environment for the application.
 
-![AWS EC2 Deployment](path/to/aws-ec2-deployment-image.jpg)
+
 
