@@ -28,7 +28,7 @@ Customers can browse through various flower shops, make purchases, and avail dis
 ### Customer Inquiries
 The app includes features for handling customer inquiries, ensuring vendors can respond to questions and provide support efficiently.
 
-![Customer Inquiries](public/images/enquiryform.png)
+![Customer Inquiries](public/images/enquiry.png)
 
 ### Database Management
 Managed and optimized databases using MongoDB to ensure data efficiency and reliability.
@@ -43,8 +43,8 @@ Utilized OAuth2 and JWT for secure user authentication, along with Gmail API and
 ### Login and Logout
 Implemented a secure login and logout system using OAuth2 and JWT, ensuring safe access to user accounts.
 ![Login](public/images/login.png)
-
-![google-oauth2](public/images/signup.png)
+![google-oauth2](public/images/oauth2.png)
+![signup](public/images/signup.png)
 ## Deployment
 PhoolMandi is deployed on AWS EC2, providing a scalable and reliable environment for the application.
 
