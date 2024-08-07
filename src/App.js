@@ -17,6 +17,11 @@ import EmailVerification from "./Component/Seller/EmailVerification";
 import Footer from "./Component/Footer";
 import { useState } from "react";
 import "./App.css";
+import AddProduct from "./Component/Seller/AddProduct";
+import SellerLogin from "./Component/Seller/SellerLogin";
+import SellerDashboard from "./Component/Seller/SellerDashboard";
+import Feedback from "./Component/Feedback/Feedback";
+
 function App() {
   const [verifiedEmail, setVerifiedEmail] = useState("");
   return (
@@ -25,12 +30,15 @@ function App() {
         <BrowserRouter>
           <Navbar />
           <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/directBuy" element={<SellerData />} />
+            <Route path="/" element={<SellerData />} />
+            <Route path="/livePrice" element={<HomePage />} />
+            {/* <Route path="/directBuy" element={<SellerData />} /> */}
             <Route path="/login" element={<LoginForm />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/oauth2/redirect" element={<OAuth2Redirect />} />
-            <Route path="/livePrice" element={<LivePrice />} />
+            <Route path="/savelivePrice" element={<LivePrice />} />
+            <Route path="/sellerLogin" element={<SellerLogin />} />
+            <Route path="/seller-dashboard" element={<SellerDashboard />} />
 
             <Route
               path="/becameseller"
@@ -42,7 +50,7 @@ function App() {
                 )
               }
             />
-
+            <Route path="/product-dashboard" element={<AddProduct />} />
             <Route
               path="/enquiryform"
               element={
@@ -52,6 +60,7 @@ function App() {
               }
             />
             <Route path="/productlist" element={<ProductList />} />
+            <Route path="/feedback" element={<Feedback />} />
             {/* <Route path="/becameseller" element={<SellerForm />} /> */}
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>

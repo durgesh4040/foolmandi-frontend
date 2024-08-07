@@ -71,7 +71,8 @@ const ProductCard = ({ product, sellerEmail }) => (
     <div className="p-4 flex flex-col flex-grow">
       <h2 className="text-lg font-bold text-gray-900">{product.productName}</h2>
       <p className="text-gray-900">
-        <span className="font-bold">₹</span> {product.price.toFixed(2)}
+        <span className="font-bold">₹ {product.price}</span>
+        <span className="font-bold ml-1">/ {product.unit}</span>
       </p>
       <div className="flex justify-end mt-auto">
         <Link

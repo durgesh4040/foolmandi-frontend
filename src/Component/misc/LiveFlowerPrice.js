@@ -6,8 +6,7 @@ import Format from "../Format";
 export const liveflowerPrice = {
   authenticate,
   signup,
-  numberOfUsers,
-  numberOfMovies,
+  saveFeedback,
   getUsers,
   deleteUser,
   getMovies,
@@ -21,6 +20,10 @@ export const liveflowerPrice = {
   sendOtp,
   verifyOtp,
   getDataByDate,
+  saveProduct,
+  loginSeller,
+  deleteProductById,
+  updateProduct,
 };
 
 function authenticate(username, password) {
@@ -39,6 +42,14 @@ function signup(user) {
   });
 }
 
+function updateProduct(id, product, user) {
+  return instance.put(`api/getUpdate/${id}`, product, {
+    headers: {
+      "Content-type": "application/json",
+      Authorization: bearerAuth(user),
+    },
+  });
+}
 function sendOtp(email) {
   return instance.post(
     `/public/sendOtp?email=${encodeURIComponent(email)}`,
@@ -84,22 +95,48 @@ function getDataByDate() {
 }
 
 function saveSeller(seller) {
-  return instance.post("/public/seller", seller, {
-    headers: { "Content-type": "mutipart/form-data" },
+  return instance.post("/public/signup1", seller, {
+    headers: { "Content-type": "application/json" },
   });
 }
-function numberOfUsers() {
-  return instance.get("/public/numberOfUsers");
+
+function saveProduct(verifiedEmail, productData, user) {
+  return instance.post(`api/saveProduct/${verifiedEmail}`, productData, {
+    headers: {
+      "Content-type": "mutipart/form-data",
+      Authorization: bearerAuth(user),
+    },
+  });
 }
 
-function numberOfMovies() {
-  return instance.get("/public/numberOfMovies");
+function loginSeller(login) {
+  return instance.post(`public/login1`, login, {
+    headers: { "Content-type": "application/json" },
+  });
+}
+
+function saveFeedback(feedback) {
+  return instance.post(
+    `/public/saveFeedback`,
+    { text: feedback },
+    {
+      headers: { "Content-type": "application/json" },
+    }
+  );
 }
 
 function getUsers(user, username) {
   const url = username ? `/api/users/${username}` : "/api/users";
   return instance.get(url, {
     headers: { Authorization: bearerAuth(user) },
+  });
+}
+
+function deleteProductById(id, user) {
+  return instance.delete(`/api/getId/${id}`, {
+    headers: {
+      Authorization: bearerAuth(user),
+    },
   });
 }
 

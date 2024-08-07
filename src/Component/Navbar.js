@@ -101,8 +101,8 @@ const Navbar = () => {
                   : ""
               }`}
             >
-              <Link to="/directBuy" className="block text-white">
-                DirectBuy
+              <Link to="/livePrice" className="block text-white">
+                LivePrice
               </Link>
             </div>
 
@@ -126,7 +126,7 @@ const Navbar = () => {
               }`}
               style={adminPageStyle()}
             >
-              <Link to="/adminpage" className="text-white">
+              <Link to="/feedback" className="text-white">
                 Feedback
               </Link>
             </div>
@@ -190,8 +190,8 @@ const Navbar = () => {
                 : ""
             }`}
           >
-            <Link to="/directBuy" className="block text-white">
-              DirectBuy
+            <Link to="/livePrice" className="block text-white">
+              LivePrice
             </Link>
           </div>
           <div
@@ -214,7 +214,7 @@ const Navbar = () => {
             }`}
             style={adminPageStyle()} // Show for admin users only
           >
-            <Link to="/adminpage" className="block text-white">
+            <Link to="/feedback" className="block text-white">
               Feedback
             </Link>
           </div>
