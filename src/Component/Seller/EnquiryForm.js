@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useLocation, Navigate } from "react-router-dom";
-import axios from "axios";
 import { liveflowerPrice } from "../misc/LiveFlowerPrice";
 import { useAuth } from "../context/AuthContext";
 
@@ -18,7 +17,6 @@ const EnquiryForm = () => {
 
   const Auth = useAuth();
   const user = Auth.getUser();
-  const isUser = user.data.rol[0] === "USER";
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;

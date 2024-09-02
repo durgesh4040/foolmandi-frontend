@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { liveflowerPrice } from "../misc/LiveFlowerPrice";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { parseJwt } from "../misc/Helpers";
+import PasswordToggle from "../PasswordToggle";
 const SellerForm = ({ verifiedEmail }) => {
   const Auth = useAuth();
-  const isLoggedIn = Auth.userIsAuthenticated();
+  // const isLoggedIn = Auth.userIsAuthenticated();
   const [username, setUserName] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
@@ -18,31 +19,18 @@ const SellerForm = ({ verifiedEmail }) => {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const checkEmailExist = async () => {
-      try {
-        const response = await liveflowerPrice.findSellerByEmail(verifiedEmail);
-        console.log(response);
-        if (response.status === 200) {
-          navigate("/product-dashboard", { state: { email: verifiedEmail } });
-        }
-      } catch (error) {
-        console.error("Email does not exist", error);
-      }
-    };
-
-    if (verifiedEmail) {
-      checkEmailExist();
-    }
-  }, [verifiedEmail, navigate]);
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+    const trimedValue = value.trim();
     switch (name) {
+      case "username":
+        setUserName(trimedValue);
+        break;
       case "name":
         setName(value);
         break;
       case "password":
-        setPassword(value);
+        setPassword(trimedValue);
         break;
       case "companyName":
         setCompanyName(value);
@@ -60,6 +48,7 @@ const SellerForm = ({ verifiedEmail }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
     if (
       !(
         password &&
@@ -78,7 +67,7 @@ const SellerForm = ({ verifiedEmail }) => {
     setIsLoading(true);
 
     const seller = {
-      username: verifiedEmail,
+      username,
       password,
       email: verifiedEmail,
       companyName,
@@ -87,25 +76,15 @@ const SellerForm = ({ verifiedEmail }) => {
       name,
     };
 
-    // const seller = new FormData();
-    // seller.append("username", username);
-    // seller.append("password", password);
-    // seller.append("email", verifiedEmail);
-    // seller.append("companyName", companyName);
-    // seller.append("address", address);
-    // seller.append("phoneNumber", phoneNumber);
-    console.log(seller);
-
     try {
       const response = await liveflowerPrice.saveSeller(seller);
 
-      const { accessToken } = response.data;
-      const data = parseJwt(accessToken);
-      const authenticatedUser = { data, accessToken };
-
-      Auth.userLogin(authenticatedUser);
-
-      if (response.status === 200) {
+      // Auth.userLogin(authenticatedUser);
+      if (response.status === 201) {
+        const { accessToken } = response.data;
+        const data = parseJwt(accessToken);
+        const authenticatedUser = { data, accessToken };
+        Auth.userLogin(authenticatedUser);
         setUserName("");
         setPassword("");
         setCompanyName("");
@@ -114,13 +93,14 @@ const SellerForm = ({ verifiedEmail }) => {
         setName("");
         setIsError(false);
         setErrorMessage("");
+
         console.log("Seller saved successfully:", response.data);
+
+        navigate("/seller-dashboard", { state: { username: username } });
       }
     } catch (error) {
       if (error.response && error.response.status === 409) {
-        setErrorMessage(
-          "Email is already registered. Please use a different email."
-        );
+        setErrorMessage(`${error.response.data.message}`);
       } else {
         setErrorMessage("Failed to save data. Please try again.");
       }
@@ -129,9 +109,7 @@ const SellerForm = ({ verifiedEmail }) => {
       setIsLoading(false);
     }
   };
-  if (isLoggedIn) {
-    navigate("/product-dashboard", { state: { email: verifiedEmail } });
-  }
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-green-50">
       <div className="max-w-md w-full space-y-8 p-10 bg-white rounded-xl shadow-lg z-10">
@@ -149,10 +127,28 @@ const SellerForm = ({ verifiedEmail }) => {
             </h2>
             <div className="mb-4">
               <label
+                htmlFor="username"
+                className="block text-green-700 text-sm font-bold mb-2"
+              >
+                Username:
+              </label>
+              <input
+                type="text"
+                id="username"
+                name="username"
+                value={username}
+                onChange={handleInputChange}
+                placeholder="Username"
+                required
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:shadow-outline"
+              />
+            </div>
+            <div className="mb-4">
+              <label
                 htmlFor="name"
                 className="block text-green-700 text-sm font-bold mb-2"
               >
-                Name:
+                Name
               </label>
               <input
                 type="text"
@@ -172,7 +168,7 @@ const SellerForm = ({ verifiedEmail }) => {
               >
                 Password:
               </label>
-              <input
+              {/* <input
                 type="password"
                 id="password"
                 name="password"
@@ -181,6 +177,14 @@ const SellerForm = ({ verifiedEmail }) => {
                 placeholder="Password"
                 required
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:shadow-outline"
+              /> */}
+              <PasswordToggle
+                id="password"
+                name="password"
+                value={password}
+                placeholder="Password"
+                onChange={handleInputChange}
+                className="px-6 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-700"
               />
             </div>
             <div className="mb-4">
@@ -233,6 +237,8 @@ const SellerForm = ({ verifiedEmail }) => {
                 value={phoneNumber}
                 onChange={handleInputChange}
                 placeholder="Phone Number"
+                pattern="\d*"
+                maxlength="10"
                 required
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:shadow-outline"
               />

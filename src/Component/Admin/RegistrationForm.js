@@ -8,11 +8,11 @@ const RegistrationForm = () => {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [isError, setIsError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [setIsError] = useState(false);
+  const [setErrorMessage] = useState("");
 
   const Auth = useAuth();
-  const isLoggedIn = Auth.userIsAuthenticated();
+  //const isLoggedIn = Auth.userIsAuthenticated();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;

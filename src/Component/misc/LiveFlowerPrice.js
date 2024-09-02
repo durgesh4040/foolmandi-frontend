@@ -1,7 +1,6 @@
 import axios from "axios";
 import { config } from "../../Constants";
 import { parseJwt } from "./Helpers";
-import Format from "../Format";
 
 export const liveflowerPrice = {
   authenticate,
@@ -9,9 +8,7 @@ export const liveflowerPrice = {
   saveFeedback,
   getUsers,
   deleteUser,
-  getMovies,
-  deleteMovie,
-  addMovie,
+
   allData,
   saveSeller,
   findAllSellerData,
@@ -24,6 +21,9 @@ export const liveflowerPrice = {
   loginSeller,
   deleteProductById,
   updateProduct,
+  findSellerByName,
+  forgotUserName,
+  forgotPassword,
 };
 
 function authenticate(username, password) {
@@ -47,6 +47,21 @@ function updateProduct(id, product, user) {
     headers: {
       "Content-type": "application/json",
       Authorization: bearerAuth(user),
+    },
+  });
+}
+function forgotUserName(email, user) {
+  return instance.post(`public/sendUserName/${email}`, {
+    headers: {
+      "Content-type": "application/json",
+    },
+  });
+}
+
+function forgotPassword(forgotPassword) {
+  return instance.put(`public/resetPassword`, forgotPassword, {
+    headers: {
+      "Content-type": "mutipart/form-data",
     },
   });
 }
@@ -83,15 +98,23 @@ function enquiryData(enquiry, user) {
 function findSellerByEmail(email) {
   return instance.get(`/public/findSellerByEmail/${email}`);
 }
+
+function findSellerByName(username) {
+  return instance.get(`/public/findSellerByName/${username}`);
+}
 function allData(page, size) {
   return instance.get(`/public/getData?page=${page}&size=${size}`);
 }
 
-function findAllSellerData() {
-  return instance.get(`/public/allSeller`);
+function findAllSellerData(searchQuery) {
+  const url = searchQuery
+    ? `/public/sellers/search?term=${searchQuery}`
+    : "/public/allSeller";
+  console.log("api-url", url);
+  return instance.get(url);
 }
 function getDataByDate() {
-  return instance.get(`public/getPriceByDate/${Format}`);
+  return instance.get(`public/getPriceByDate/2024-07-25`);
 }
 
 function saveSeller(seller) {
@@ -100,8 +123,8 @@ function saveSeller(seller) {
   });
 }
 
-function saveProduct(verifiedEmail, productData, user) {
-  return instance.post(`api/saveProduct/${verifiedEmail}`, productData, {
+function saveProduct(email, productData, user) {
+  return instance.post(`api/saveProduct/${email}`, productData, {
     headers: {
       "Content-type": "mutipart/form-data",
       Authorization: bearerAuth(user),
@@ -143,28 +166,6 @@ function deleteProductById(id, user) {
 function deleteUser(user, username) {
   return instance.delete(`/api/users/${username}`, {
     headers: { Authorization: bearerAuth(user) },
-  });
-}
-
-function getMovies(user, text) {
-  const url = text ? `/api/movies?text=${text}` : "/api/movies";
-  return instance.get(url, {
-    headers: { Authorization: bearerAuth(user) },
-  });
-}
-
-function deleteMovie(user, id) {
-  return instance.delete(`/api/movies/${id}`, {
-    headers: { Authorization: bearerAuth(user) },
-  });
-}
-
-function addMovie(user, movie) {
-  return instance.post("/api/movies", movie, {
-    headers: {
-      "Content-type": "application/json",
-      Authorization: bearerAuth(user),
-    },
   });
 }
 

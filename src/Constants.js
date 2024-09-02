@@ -7,7 +7,7 @@
 
 // const dev = {
 //   url: {
-//     API_BASE_URL: "http://www.phoolmandi.in:8080",
+//     API_BASE_URL: "https://api.phoolmandi.in",
 //     OAUTH2_REDIRECT_URI: "http://www.phoolmandi.in/oauth2/redirect",
 //   },
 // };

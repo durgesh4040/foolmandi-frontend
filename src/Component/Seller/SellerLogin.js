@@ -4,6 +4,7 @@ import { useNavigate } from "react-router";
 import LoaderComponent from "../LoaderComponent";
 import { useAuth } from "../context/AuthContext";
 import { parseJwt } from "../misc/Helpers";
+import PasswordToggle from "../PasswordToggle";
 const SellerLogin = () => {
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
@@ -15,10 +16,11 @@ const SellerLogin = () => {
   const isLoggedIn = Auth.userIsAuthenticated();
   const handleChange = (e) => {
     const { name, value } = e.target;
+    const trimvalue = value.trim();
     if (name === "username") {
-      setUserName(value);
+      setUserName(trimvalue);
     } else if (name === "password") {
-      setPassword(value);
+      setPassword(trimvalue);
     }
   };
 
@@ -45,7 +47,7 @@ const SellerLogin = () => {
       Auth.userLogin(authenticatedUser);
 
       if (response.status === 200) {
-        navigate("/seller-dashboard", { state: { sellerEmail: username } });
+        navigate("/seller-dashboard", { state: { username: username } });
       } else {
         setError(true);
         setErrorMessage(response.data.message || "Login failed.");
@@ -55,13 +57,20 @@ const SellerLogin = () => {
       setError(false);
     } catch (error) {
       setError(true);
-      console.log(error.response.data);
+
+      console.log(error.response?.data);
       setErrorMessage(
         `${error.response.data} !! ` || "An error occurred. Please try again."
       );
     } finally {
       setLoading(false);
     }
+  };
+  const handlePassword = () => {
+    navigate("/forgotPassword");
+  };
+  const handleUserName = () => {
+    navigate("/forgotUserName");
   };
 
   return (
@@ -78,22 +87,42 @@ const SellerLogin = () => {
           <form onSubmit={handleSubmit}>
             <div className="flex flex-col space-y-4 ">
               <input
-                type="email"
-                placeholder="Enter Email"
+                type="text"
+                placeholder="Enter Username"
                 name="username"
-                className="px-6 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-700"
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:shadow-outline"
                 onChange={handleChange}
                 value={username}
               />
-              <input
-                type="password"
-                placeholder="Enter Password"
+
+              <PasswordToggle
+                id="password"
                 name="password"
-                className="px-6 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-700"
-                onChange={handleChange}
                 value={password}
+                placeholder="Password"
+                onChange={handleChange}
+                className="px-6 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-700"
               />
               {isError && <p className="text-red-600">{errorMessage}</p>}
+
+              <div className="flex flex-row justify-between">
+                <div className="text-sm">
+                  <button
+                    onClick={handlePassword}
+                    className="font-medium text-green-600 hover:text-green-500"
+                  >
+                    Forgot password?
+                  </button>
+                </div>
+                <div className="text-sm">
+                  <button
+                    onClick={handleUserName}
+                    className="font-medium text-green-600 hover:text-green-500"
+                  >
+                    Forgot Username?
+                  </button>
+                </div>
+              </div>
               <button
                 type="submit"
                 className="bg-green-700 text-white py-3 rounded-md hover:bg-green-800 transition duration-300"

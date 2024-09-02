@@ -68,21 +68,24 @@ const ProductCard = ({ product, sellerEmail }) => (
       alt={product.productName}
       className="w-full h-48 object-cover"
     />
-    <div className="p-4 flex flex-col flex-grow">
+    <div className=" flex flex-col flex-grow ml-2">
       <h2 className="text-lg font-bold text-gray-900">{product.productName}</h2>
+    </div>
+    <div className="flex flex-row justify-between m-2">
       <p className="text-gray-900">
         <span className="font-bold">₹ {product.price}</span>
         <span className="font-bold ml-1">/ {product.unit}</span>
       </p>
-      <div className="flex justify-end mt-auto">
-        <Link
-          to="/enquiryform"
-          state={{ sellerEmail }}
-          className="bg-green-700 text-white font-bold py-2 px-4 rounded"
-        >
-          Enquiry
-        </Link>
-      </div>
+      <p className="font-bold ml-1">Date :- {product.date}</p>
+    </div>
+    <div className="flex justify-end mt-auto m-1">
+      <Link
+        to="/enquiryform"
+        state={{ sellerEmail }}
+        className="bg-green-700 text-white font-bold py-2 px-4 rounded"
+      >
+        Enquiry
+      </Link>
     </div>
   </div>
 );

@@ -14,7 +14,7 @@ const Search = ({ onSearch }) => {
         type="search"
         value={query}
         onChange={handleChange}
-        placeholder="Search..."
+        placeholder="Search by shop's name or address"
         className="py-3 px-4 rounded-full text-black font-bold placeholder-gray-500 border border-gray-300 focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500 bg-white shadow-md w-full"
       />
       <button type="submit" className="absolute right-0 top-0 mt-3 mr-4">

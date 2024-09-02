@@ -1,29 +1,34 @@
 import { useLocation } from "react-router";
 import { useState, useEffect } from "react";
-import Modal from "react-modal";
+
 import { liveflowerPrice } from "../misc/LiveFlowerPrice";
 import { trashO } from "react-icons-kit/fa/trashO";
 import { Icon } from "react-icons-kit";
 import { pencil } from "react-icons-kit/fa/pencil";
 import EditProductModal from "./EditProductMoadal";
+import AddProductModal from "./AddProductModal";
 import { useAuth } from "../context/AuthContext";
+
 const SellerDashboard = () => {
   const location = useLocation();
-  const { sellerEmail } = location.state;
+  const { username } = location.state;
   const [products, setProducts] = useState([]);
   const [seller, setSeller] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [editingProduct, setEditingProduct] = useState(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [email, setEmail] = useState("");
 
   const Auth = useAuth();
   const user = Auth.getUser();
-
   useEffect(() => {
     const fetchSellerData = async () => {
       try {
-        const response = await liveflowerPrice.findSellerByEmail(sellerEmail);
+        const response = await liveflowerPrice.findSellerByName(username);
+        setEmail(response.data.email);
+
         setSeller(response.data);
         setProducts(response.data.products);
       } catch (error) {
@@ -33,7 +38,7 @@ const SellerDashboard = () => {
       }
     };
     fetchSellerData();
-  }, [sellerEmail]);
+  }, [username]);
 
   const handleEditProduct = (product) => {
     setEditingProduct(product);
@@ -88,10 +93,18 @@ const SellerDashboard = () => {
   }
 
   return (
-    <>
-      <h1 className="text-center text-2xl font-bold text-green-700 mt-4">
+    <div className="min-h-screen">
+      <h1 className="text-2xl font-bold text-green-700 text-center">
         Seller Dashboard
       </h1>
+      <div className="flex justify-end mr-3">
+        <button
+          onClick={() => setIsAddModalOpen(true)}
+          className="bg-green-700 hover:bg-green-600 text-white px-4 py-2 rounded-md mr-2"
+        >
+          Add Product
+        </button>
+      </div>
 
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg mt-4">
         <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 mb-4">
@@ -176,7 +189,12 @@ const SellerDashboard = () => {
         handleInputChange={handleInputChange}
         handleSaveProduct={handleSaveProduct}
       />
-    </>
+      <AddProductModal
+        isModalOpen={isAddModalOpen}
+        setIsModalOpen={setIsAddModalOpen}
+        email={email}
+      />
+    </div>
   );
 };
 

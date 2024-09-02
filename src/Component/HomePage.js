@@ -4,7 +4,7 @@ import { Segment, Dimmer, Loader } from "semantic-ui-react";
 import Search from "./Search";
 import Crousel from "./Crousel";
 import { handleLogError } from "../Component/misc/Helpers";
-
+import { Helmet } from "react-helmet";
 export default function HomePage() {
   const images = [
     "./images/Rose.webp",
@@ -30,7 +30,7 @@ export default function HomePage() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "http://www.phoolmandi.in:8080/public/getPriceByDate/2024-07-25",
+          "https://api.phoolmandi.in/public/getPriceByDate/2024-07-25",
           {
             params: {
               page: page,
@@ -72,6 +72,17 @@ export default function HomePage() {
 
   return (
     <div className="bg-green-50">
+      <Helmet>
+        <title>Kanpur Flower Market Prices</title>
+        <meta
+          name="description"
+          content="Get the latest flower prices from Kanpur's flower market."
+        />
+        <meta
+          name="keywords"
+          content="Kanpur, flower market, prices, flowers"
+        />
+      </Helmet>
       <Crousel images={images} />
       <div className="text-3xl font-semibold my-4 h1 text-center">
         Kanpur Flower Market Price {currentDate.toLocaleString()}

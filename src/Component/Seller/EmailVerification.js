@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-
 import { liveflowerPrice } from "../misc/LiveFlowerPrice";
 import { useNavigate } from "react-router";
+import WhySellOnPhoolmandi from "./WhySellOnPhoolmandi";
 
 const EmailVerification = ({ setVerifiedEmail }) => {
   const [email, setEmail] = useState("");
   const [otp, setOtp] = useState("");
-  const [step, setStep] = useState(1); // 1 for email input, 2 for OTP input
+  const [step, setStep] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -16,8 +16,8 @@ const EmailVerification = ({ setVerifiedEmail }) => {
     setIsLoading(true);
     console.log(email);
     try {
-      // await sendOtp(email);
-      const response = await liveflowerPrice.sendOtp(email);
+      await liveflowerPrice.sendOtp(email);
+
       setStep(2);
     } catch (error) {
       setIsError(true);
@@ -26,6 +26,7 @@ const EmailVerification = ({ setVerifiedEmail }) => {
       setIsLoading(false);
     }
   };
+
   const handleVerifyOtp = async () => {
     try {
       console.log(otp);
@@ -51,18 +52,19 @@ const EmailVerification = ({ setVerifiedEmail }) => {
   const handleClick = () => {
     navigate("/sellerLogin");
   };
+
   return (
     <>
-      <div className="flex justify-end mr-3">
+      <div className="flex justify-end p-3 bg-green-50">
         <button
           onClick={handleClick}
-          className="mt-2 bg-green-700 hover:bg-green-600 rounded-md px-4 py-2 text-white"
+          className="bg-green-700 hover:bg-green-600 rounded-md px-4 py-2 text-white transition duration-200 ease-in-out"
         >
           Dashboard
         </button>
       </div>
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="max-w-md w-full space-y-8 p-10 bg-white rounded-xl shadow-lg z-10">
+      <div className="min-h-screen flex flex-col items-center justify-center bg-green-50">
+        <div className="max-w-md w-full  p-10 bg-white rounded-xl shadow-lg z-10">
           {isLoading ? (
             <div className="flex justify-center items-center h-full">
               <div className="loader"></div>
@@ -71,49 +73,54 @@ const EmailVerification = ({ setVerifiedEmail }) => {
             <div>
               {step === 1 ? (
                 <div>
-                  <h2 className="text-2xl font-bold mb-4 text-center text-green-700">
-                    Email Verification
+                  <h2 className="text-3xl font-bold mb-4 text-center text-green-700">
+                    Registration for Flower Shop
                   </h2>
-                  <input
-                    type="email"
-                    placeholder="Enter your email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:shadow-outline"
-                  />
+                  <div className="relative mb-4">
+                    <input
+                      type="email"
+                      placeholder="Enter Your Email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:shadow-outline transition duration-200 ease-in-out"
+                    />
+                  </div>
                   <button
                     onClick={handleSendOtp}
-                    className="bg-green-700 hover:bg-green-900 text-white mt-4 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                    className="w-full bg-green-700 hover:bg-green-900 text-white mt-4 font-bold py-3 px-4 rounded focus:outline-none focus:shadow-outline transition duration-200 ease-in-out"
                   >
                     Send OTP
                   </button>
                 </div>
               ) : (
                 <div>
-                  <h2 className="text-2xl font-bold mb-4 text-center text-green-700">
+                  <h2 className="text-3xl font-bold mb-4 text-center text-green-700">
                     Verify OTP
                   </h2>
-                  <input
-                    type="text"
-                    placeholder="Enter OTP"
-                    value={otp}
-                    onChange={(e) => setOtp(e.target.value)}
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:shadow-outline"
-                  />
+                  <div className="relative mb-4">
+                    <input
+                      type="text"
+                      placeholder="Enter OTP"
+                      value={otp}
+                      onChange={(e) => setOtp(e.target.value)}
+                      className="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:shadow-outline transition duration-200 ease-in-out"
+                    />
+                  </div>
                   <button
                     onClick={handleVerifyOtp}
-                    className="bg-green-700 hover:bg-green-900 mt-4 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                    className="w-full bg-green-700 hover:bg-green-900 mt-4 text-white font-bold py-3 px-4 rounded focus:outline-none focus:shadow-outline transition duration-200 ease-in-out"
                   >
                     Verify OTP
                   </button>
                 </div>
               )}
               {isError && (
-                <div className="text-red-500 text-sm mb-4">{errorMessage}</div>
+                <div className="text-red-500 text-sm mt-4">{errorMessage}</div>
               )}
             </div>
           )}
         </div>
+        <WhySellOnPhoolmandi />
       </div>
     </>
   );

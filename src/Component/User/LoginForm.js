@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { NavLink, Navigate } from "react-router-dom";
+import { NavLink, Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { liveflowerPrice } from "../misc/LiveFlowerPrice";
 import { parseJwt, getSocialLoginUrl, handleLogError } from "../misc/Helpers";
+import PasswordToggle from "../PasswordToggle";
 
 const LoginForm = () => {
   const Auth = useAuth();
@@ -11,14 +12,12 @@ const LoginForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isError, setIsError] = useState(false);
+  const navigate = useNavigate();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    if (name === "username") {
-      setUsername(value);
-    } else if (name === "password") {
-      setPassword(value);
-    }
+    if (name === "username") setUsername(value);
+    if (name === "password") setPassword(value);
   };
 
   const handleSubmit = async (e) => {
@@ -46,13 +45,17 @@ const LoginForm = () => {
     }
   };
 
-  if (isLoggedIn) {
-    return <Navigate to="/" />;
-  }
-
   const handleGoogleLogin = () => {
     window.location.href = getSocialLoginUrl("google");
   };
+
+  const handlePassword = () => {
+    navigate("/forgotPassword");
+  };
+
+  if (isLoggedIn) {
+    return <Navigate to="/" />;
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-green-50">
@@ -74,7 +77,7 @@ const LoginForm = () => {
                 type="text"
                 autoComplete="username"
                 required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm"
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:shadow-outline"
                 placeholder="Username"
                 value={username}
                 onChange={handleInputChange}
@@ -84,16 +87,13 @@ const LoginForm = () => {
               <label htmlFor="password" className="sr-only">
                 Password
               </label>
-              <input
+              <PasswordToggle
                 id="password"
                 name="password"
-                type="password"
-                autoComplete="current-password"
-                required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm"
-                placeholder="Password"
                 value={password}
+                placeholder="Password"
                 onChange={handleInputChange}
+                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm mt-2"
               />
             </div>
           </div>
@@ -113,14 +113,14 @@ const LoginForm = () => {
                 Remember me
               </label>
             </div>
-
             <div className="text-sm">
-              <a
-                href="#"
+              <button
+                type="button"
+                onClick={handlePassword}
                 className="font-medium text-green-600 hover:text-green-500"
               >
                 Forgot your password?
-              </a>
+              </button>
             </div>
           </div>
 
@@ -140,7 +140,10 @@ const LoginForm = () => {
         )}
         <div className="text-center mt-2">
           Don't have an account?{" "}
-          <NavLink to="/signup" className="text-green-600 hover:text-green-500">
+          <NavLink
+            to="/signup"
+            className="text-green-600 hover:text-green-500 font-medium"
+          >
             Sign Up
           </NavLink>
         </div>
@@ -148,6 +151,7 @@ const LoginForm = () => {
         <p className="text-center">or</p>
         <div className="w-full flex justify-center">
           <button
+            type="button"
             onClick={handleGoogleLogin}
             className="flex items-center bg-white border border-gray-300 rounded-lg shadow-md px-6 py-2 text-sm font-medium text-gray-800 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
           >
