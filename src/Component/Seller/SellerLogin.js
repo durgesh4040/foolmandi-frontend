@@ -6,7 +6,7 @@ import { useAuth } from "../context/AuthContext";
 import { parseJwt } from "../misc/Helpers";
 import PasswordToggle from "../PasswordToggle";
 const SellerLogin = () => {
-  const [username, setUserName] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isError, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -17,42 +17,40 @@ const SellerLogin = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     const trimvalue = value.trim();
-    if (name === "username") {
-      setUserName(trimvalue);
+    if (name === "email") {
+      setEmail(trimvalue);
     } else if (name === "password") {
       setPassword(trimvalue);
     }
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(false);
     setErrorMessage("");
-
-    if (!(username && password)) {
+    if (!(email && password)) {
       setError(true);
       setErrorMessage("Please fill in both fields.");
       return;
     }
-
-    const login = { username, password };
+    const login = { email, password };
     setLoading(true);
     try {
       const response = await liveflowerPrice.loginSeller(login);
 
-      const { accessToken } = response.data;
-      const data = parseJwt(accessToken);
-      const authenticatedUser = { data, accessToken };
+      const {token} = response.data;
+      const data = parseJwt(token);
+      const authenticatedUser = { data,token};
 
       Auth.userLogin(authenticatedUser);
 
       if (response.status === 200) {
-        navigate("/seller-dashboard", { state: { username: username } });
+        console.log(response.data._id);
+        navigate("/seller-dashboard", { state: { sellerId: response.data.user._id} });
       } else {
         setError(true);
         setErrorMessage(response.data.message || "Login failed.");
       }
-      setUserName("");
+      setEmail("");
       setPassword("");
       setError(false);
     } catch (error) {
@@ -88,11 +86,11 @@ const SellerLogin = () => {
             <div className="flex flex-col space-y-4 ">
               <input
                 type="text"
-                placeholder="Enter Username"
-                name="username"
+                placeholder="Enter Email"
+                name="email"
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:shadow-outline"
                 onChange={handleChange}
-                value={username}
+                value={email}
               />
 
               <PasswordToggle
@@ -136,5 +134,4 @@ const SellerLogin = () => {
     </div>
   );
 };
-
 export default SellerLogin;

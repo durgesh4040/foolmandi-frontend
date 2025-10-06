@@ -14,20 +14,34 @@ function AuthProvider({ children }) {
     return JSON.parse(localStorage.getItem('user'))
   }
 
-  const userIsAuthenticated = () => {
-    let storedUser = localStorage.getItem('user')
-    if (!storedUser) {
-      return false
-    }
-    storedUser = JSON.parse(storedUser)
-
-    // if user has token expired, logout user
-    if (Date.now() > storedUser.data.exp * 1000) {
-      userLogout()
-      return false
-    }
-    return true
+const userIsAuthenticated = () => {
+  const storedUserRaw = localStorage.getItem('user');
+  if (!storedUserRaw) {
+    return false;
   }
+
+  let storedUser;
+  try {
+    storedUser = JSON.parse(storedUserRaw);
+  } catch (err) {
+    console.error("Invalid user JSON:", err);
+    return false;
+  }
+
+  const exp = storedUser.data?.exp;
+  if (typeof exp !== 'number') {
+    console.error("Missing or invalid exp value:", exp);
+    return false;
+  }
+
+  if (Date.now() > exp * 1000) {
+    userLogout();
+    return false;
+  }
+
+  return true;
+};
+
 
   const userLogin = user => {
     localStorage.setItem('user', JSON.stringify(user))

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { useAuth } from "../Component/context/AuthContext"; // Correct the path if necessary
+import { useAuth } from "./context/AuthContext"; // Correct the path if necessary
 import CrossButton from "./CrossButton";
 
 const Navbar = () => {
@@ -54,11 +54,8 @@ const Navbar = () => {
   const userPageStyle = () => {
     return { display: "block" };
   };
+const getUserName = () => getUser()?.data?.name ?? "Guest";
 
-  const getUserName = () => {
-    const user = getUser();
-    return user ? user.data.name : "Guest";
-  };
 
   return (
     <nav className="bg-green-700">

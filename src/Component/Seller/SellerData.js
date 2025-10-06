@@ -32,7 +32,7 @@ const SellerData = () => {
   }, [searchQuery]);
 
   const handleGetBestPrice = (seller) => {
-    navigate("/productlist", { state: { sellerEmail: seller.email } });
+    navigate("/productlist", { state: { sellerEmail: seller._id} });
   };
   const handleSearch = (searchQuery) => {
     console.log("search query:", searchQuery);

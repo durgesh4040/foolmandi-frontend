@@ -3,7 +3,7 @@ import axios from "axios";
 import { Segment, Dimmer, Loader } from "semantic-ui-react";
 import Search from "./Search";
 import Crousel from "./Crousel";
-import { handleLogError } from "../Component/misc/Helpers";
+import { handleLogError } from "./misc/Helpers";
 import { Helmet } from "react-helmet";
 export default function HomePage() {
   const images = [
@@ -15,51 +15,39 @@ export default function HomePage() {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [data, setData] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
-
+  const prodUrl="https://phoolmandi-backend-production.onrender.com"
+  const apiUrl="http://localhost:3000/api"
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentDate(new Date());
     }, 1000);
     return () => clearInterval(timer);
   }, []);
-
-  useEffect(() => {
-    setIsLoading(true);
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          "https://api.phoolmandi.in/public/getPriceByDate/2024-07-25",
-          {
-            params: {
-              page: page,
-              size: 6,
-              name: searchQuery, // Pass the search query as a parameter
-            },
-          }
-        );
-        console.log("Fetched data:", response.data);
-        setData(response.data.content || []);
-        setTotalPages(response.data.totalPages);
-        setIsLoading(false);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-        handleLogError(error);
-        setIsLoading(false);
-      }
-    };
-    fetchData();
-  }, [page, searchQuery]);
+  const fetchData = async (pageNumber) => {
+    try {
+      const res = await axios.get(`${apiUrl}/live/get?page=${pageNumber}&limit=2`);
+      console.log("res data live", res.data.live);
+      setData(res.data.live);
+      setTotalPages(res.data.totalPages);
+      console.log(res.data.totalPages);
+      setIsLoading(false);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+useEffect(()=>{
+  fetchData(page)
+},[page])
 
   const handleSearch = (query) => {
     console.log("Search query:", query);
     setSearchQuery(query);
-    setPage(0); // Reset page to 0 when performing a new search
+    setPage(0); 
   };
-
   const handleNextPage = () => {
-    if (page < totalPages - 1) {
+    if (page <=totalPages) {
       setPage(page + 1);
     }
   };
@@ -69,7 +57,6 @@ export default function HomePage() {
       setPage(page - 1);
     }
   };
-
   return (
     <div className="bg-green-50">
       <Helmet>
@@ -122,8 +109,10 @@ export default function HomePage() {
                 </tr>
               </thead>
               <tbody>
-                {data.length > 0 ? (
-                  data.map((item, index) => (
+                {data && data.length > 0 ? (
+                  data.map((item, index) => {
+                    const date=item.date.split('T')[0];
+                    return(
                     <tr
                       key={index}
                       className="bg-white border-b dark:bg-white dark:border-black-700 hover:bg-green-100 dark:hover:bg-green-200"
@@ -134,7 +123,7 @@ export default function HomePage() {
                       >
                         <div className="flex items-center space-x-3">
                           <img
-                            src={`./images/${item.name}.webp`}
+                            src={item.imageUrl}
                             alt={item.name}
                             className="w-10 h-10 object-cover rounded-full"
                           />
@@ -145,14 +134,15 @@ export default function HomePage() {
                         {item.category}
                       </td>
                       <td className="py-4 px-6 text-black text-center">
-                        {item.qty}
+                        {date}
                       </td>
                       <td className="py-4 px-6 text-black text-center">
                         {item.unit}
                       </td>
                       <td className="py-4 px-6 text-black font-bold">{`\u20B9 ${item.price}`}</td>
                     </tr>
-                  ))
+                    )
+})
                 ) : (
                   <tr>
                     <td
@@ -166,7 +156,6 @@ export default function HomePage() {
               </tbody>
             </table>
           )}
-          {/* Pagination controls */}
           <div className="mt-4 flex justify-center">
             <button
               onClick={handlePreviousPage}
@@ -177,7 +166,7 @@ export default function HomePage() {
             </button>
             <button
               onClick={handleNextPage}
-              disabled={page >= totalPages - 1}
+              disabled={page >=totalPages}
               className="px-4 py-2 bg-green-700 text-white rounded-md"
             >
               Next

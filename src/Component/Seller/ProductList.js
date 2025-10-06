@@ -14,8 +14,9 @@ const ProductList = () => {
     const fetchSellerData = async () => {
       try {
         const response = await liveflowerPrice.findSellerByEmail(sellerEmail);
+        console.log(response.email)
         setSeller(response.data);
-        setProducts(response.data.products);
+        setProducts(response.data.product);
       } catch (error) {
         setError(error.message);
       } finally {
@@ -64,17 +65,17 @@ const ProductList = () => {
 const ProductCard = ({ product, sellerEmail }) => (
   <div className="border rounded-lg shadow-lg overflow-hidden bg-white flex flex-col">
     <img
-      src={product.imageUrl}
-      alt={product.productName}
+      src={product.image}
+      alt={product.productNames}
       className="w-full h-48 object-cover"
     />
     <div className=" flex flex-col flex-grow ml-2">
-      <h2 className="text-lg font-bold text-gray-900">{product.productName}</h2>
+      <h2 className="text-lg font-bold text-gray-900">{product.productNames}</h2>
     </div>
     <div className="flex flex-row justify-between m-2">
       <p className="text-gray-900">
-        <span className="font-bold">₹ {product.price}</span>
-        <span className="font-bold ml-1">/ {product.unit}</span>
+        <span className="font-bold">₹ {product.productPrices}</span>
+        <span className="font-bold ml-1">/ {product.productUnits}</span>
       </p>
       <p className="font-bold ml-1">Date :- {product.date}</p>
     </div>

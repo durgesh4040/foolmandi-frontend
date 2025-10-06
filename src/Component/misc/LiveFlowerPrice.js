@@ -26,10 +26,10 @@ export const liveflowerPrice = {
   forgotPassword,
 };
 
-function authenticate(username, password) {
+function authenticate(email, password) {
   return instance.post(
-    "/auth/authenticate",
-    { username, password },
+    "/auth/login",
+    { email, password },
     {
       headers: { "Content-type": "application/json" },
     }
@@ -37,16 +37,15 @@ function authenticate(username, password) {
 }
 
 function signup(user) {
-  return instance.post("/auth/signup", user, {
+  return instance.post("/auth/register", user, {
     headers: { "Content-type": "application/json" },
   });
 }
 
-function updateProduct(id, product, user) {
-  return instance.put(`api/getUpdate/${id}`, product, {
+function updateProduct(id, product) {
+  return instance.patch(`/productUpdate/${id}`, product, {
     headers: {
       "Content-type": "application/json",
-      Authorization: bearerAuth(user),
     },
   });
 }
@@ -67,8 +66,7 @@ function forgotPassword(forgotPassword) {
 }
 function sendOtp(email) {
   return instance.post(
-    `/public/sendOtp?email=${encodeURIComponent(email)}`,
-    null,
+    `/public/sendOtp?email=${email}`,
     {
       headers: { "Content-type": "application/json" },
     }
@@ -76,10 +74,9 @@ function sendOtp(email) {
 }
 function verifyOtp(email, otp) {
   return instance.post(
-    `/public/verifyOtp?email=${encodeURIComponent(
+    `/public/verifyOtp?email=${
       email
-    )}&otp=${encodeURIComponent(otp)}`,
-    null,
+    }&otp=${otp}`,
     {
       headers: { "Content-type": "application/json" },
     }
@@ -95,12 +92,12 @@ function enquiryData(enquiry, user) {
   });
 }
 
-function findSellerByEmail(email) {
-  return instance.get(`/public/findSellerByEmail/${email}`);
+function findSellerByEmail(sellerId) {
+  return instance.get(`/getProduct/${sellerId}`);
 }
 
-function findSellerByName(username) {
-  return instance.get(`/public/findSellerByName/${username}`);
+function findSellerByName(sellerId) {
+  return instance.get(`/getProduct/${sellerId}`);
 }
 function allData(page, size) {
   return instance.get(`/public/getData?page=${page}&size=${size}`);
@@ -118,22 +115,21 @@ function getDataByDate() {
 }
 
 function saveSeller(seller) {
-  return instance.post("/public/signup1", seller, {
+  return instance.post("/api/auth/seller/register", seller, {
     headers: { "Content-type": "application/json" },
   });
 }
 
-function saveProduct(email, productData, user) {
-  return instance.post(`api/saveProduct/${email}`, productData, {
+function saveProduct(sellerId, productData, user) {
+  return instance.post(`/saveProduct/${sellerId}`, productData, {
     headers: {
       "Content-type": "mutipart/form-data",
-      Authorization: bearerAuth(user),
     },
   });
 }
 
 function loginSeller(login) {
-  return instance.post(`public/login1`, login, {
+  return instance.post(`seller/login`, login, {
     headers: { "Content-type": "application/json" },
   });
 }
@@ -156,10 +152,10 @@ function getUsers(user, username) {
 }
 
 function deleteProductById(id, user) {
-  return instance.delete(`/api/getId/${id}`, {
-    headers: {
-      Authorization: bearerAuth(user),
-    },
+  return instance.delete(`/productDelete/${id}`, {
+    // headers: {
+    //   Authorization: bearerAuth(user),
+    // },
   });
 }
 

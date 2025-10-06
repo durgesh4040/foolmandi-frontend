@@ -9,34 +9,34 @@ const LoginForm = () => {
   const Auth = useAuth();
   const isLoggedIn = Auth.userIsAuthenticated();
 
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isError, setIsError] = useState(false);
   const navigate = useNavigate();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    if (name === "username") setUsername(value);
+    if (name === "email") setEmail(value);
     if (name === "password") setPassword(value);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!(username && password)) {
+    if (!(email && password)) {
       setIsError(true);
       return;
     }
 
     try {
-      const response = await liveflowerPrice.authenticate(username, password);
-      const { accessToken } = response.data;
-      const data = parseJwt(accessToken);
-      const authenticatedUser = { data, accessToken };
+      const response = await liveflowerPrice.authenticate(email, password);
+      const { token } = response.data;
+      const data = parseJwt(token);
+      const authenticatedUser = { data, token };
 
       Auth.userLogin(authenticatedUser);
 
-      setUsername("");
+      setEmail("");
       setPassword("");
       setIsError(false);
     } catch (error) {
@@ -69,17 +69,17 @@ const LoginForm = () => {
           <div className="rounded-md shadow-sm -space-y-px">
             <div>
               <label htmlFor="username" className="sr-only">
-                Username
+                Email
               </label>
               <input
-                id="username"
-                name="username"
-                type="text"
-                autoComplete="username"
+                id="email"
+                name="email"
+                type="email"
+                autoComplete="email"
                 required
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:shadow-outline"
                 placeholder="Username"
-                value={username}
+                value={email}
                 onChange={handleInputChange}
               />
             </div>

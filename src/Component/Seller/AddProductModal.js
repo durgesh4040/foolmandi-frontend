@@ -3,12 +3,12 @@ import Modal from "react-modal";
 import { liveflowerPrice } from "../misc/LiveFlowerPrice";
 import { useAuth } from "../context/AuthContext";
 
-const AddProductModal = ({ isModalOpen, setIsModalOpen, email }) => {
+const AddProductModal = ({ isModalOpen, setIsModalOpen, sellerId }) => {
   const [product, setProduct] = useState({
-    productName: "",
-    category: "",
-    price: "",
-    unit: "",
+    productNames: "",
+    productCategory: "",
+    productPrices: "",
+    productUnits: "",
     image: null,
   });
   const [loading, setLoading] = useState(false);
@@ -33,31 +33,32 @@ const AddProductModal = ({ isModalOpen, setIsModalOpen, email }) => {
     }));
   };
 
-  const handleAddProduct = async () => {
+  const handleAddProduct = async (e) => {
     setLoading(true);
     setSuccess(null);
+  console.log("hi");
     const productData = new FormData();
-    productData.append("productNames", product.productName);
-    productData.append("productPrices", product.price);
-    productData.append("productUnits", product.unit);
-    productData.append("productCategory", product.category);
+    productData.append("productNames", product.productNames);
+    productData.append("productPrices", product.productPrices);
+    productData.append("productUnits", product.productUnits);
+    productData.append("productCategory", product.productCategory);
     if (product.image) {
-      productData.append("multipartFiles", product.image);
+      productData.append("image", product.image);
     }
 
     try {
       const response = await liveflowerPrice.saveProduct(
-        email,
+        sellerId,
         productData,
         user
       );
 
       if (response.status === 200) {
         setProduct({
-          productName: "",
-          category: "",
-          price: "",
-          unit: "",
+          productNames: "",
+          productCategory: "",
+          productPrices: "",
+          productUnits: "",
           image: null,
         });
 
@@ -95,8 +96,8 @@ const AddProductModal = ({ isModalOpen, setIsModalOpen, email }) => {
             </label>
             <input
               type="text"
-              name="productName"
-              value={product.productName}
+              name="productNames"
+              value={product.productNames}
               onChange={handleInputChange}
               className="w-full p-2 sm:p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
               placeholder="Enter product name"
@@ -110,9 +111,9 @@ const AddProductModal = ({ isModalOpen, setIsModalOpen, email }) => {
               <label className="flex items-center mb-2 sm:mb-0">
                 <input
                   type="radio"
-                  name="category"
+                  name="productCategory"
                   value="Cut Flower"
-                  checked={product.category === "Cut Flower"}
+                  checked={product.productCategory === "Cut Flower"}
                   onChange={handleInputChange}
                   className="form-radio text-green-500"
                 />
@@ -121,9 +122,9 @@ const AddProductModal = ({ isModalOpen, setIsModalOpen, email }) => {
               <label className="flex items-center mb-2 sm:mb-0">
                 <input
                   type="radio"
-                  name="category"
+                  name="productCategory"
                   value="Loose Flower"
-                  checked={product.category === "Loose Flower"}
+                  checked={product.productCategory === "Loose Flower"}
                   onChange={handleInputChange}
                   className="form-radio text-green-500"
                 />
@@ -137,8 +138,8 @@ const AddProductModal = ({ isModalOpen, setIsModalOpen, email }) => {
             </label>
             <input
               type="number"
-              name="price"
-              value={product.price}
+              name="productPrices"
+              value={product.productPrices}
               onChange={handleInputChange}
               className="w-full p-2 sm:p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
               placeholder="Enter product price"
@@ -152,9 +153,9 @@ const AddProductModal = ({ isModalOpen, setIsModalOpen, email }) => {
               <label className="flex items-center mb-2 sm:mb-0">
                 <input
                   type="radio"
-                  name="unit"
+                  name="productUnits"
                   value="Kg"
-                  checked={product.unit === "Kg"}
+                  checked={product.productUnits === "Kg"}
                   onChange={handleInputChange}
                   className="form-radio text-green-500"
                 />
@@ -163,9 +164,9 @@ const AddProductModal = ({ isModalOpen, setIsModalOpen, email }) => {
               <label className="flex items-center mb-2 sm:mb-0">
                 <input
                   type="radio"
-                  name="unit"
+                  name="productUnits"
                   value="Pieces"
-                  checked={product.unit === "Pieces"}
+                  checked={product.productUnits === "Pieces"}
                   onChange={handleInputChange}
                   className="form-radio text-green-500"
                 />
@@ -207,5 +208,6 @@ const AddProductModal = ({ isModalOpen, setIsModalOpen, email }) => {
     </Modal>
   );
 };
-
 export default AddProductModal;
+
+

@@ -27,8 +27,8 @@ const EditProductModal = ({
               </label>
               <input
                 type="text"
-                name="productName"
-                value={editingProduct.productName}
+                name="productNames"
+                value={editingProduct.productNames}
                 onChange={handleInputChange}
                 placeholder="Product Name"
                 className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
@@ -40,8 +40,8 @@ const EditProductModal = ({
               </label>
               <input
                 type="text"
-                name="category"
-                value={editingProduct.category}
+                name="productCategory"
+                value={editingProduct.productCategory}
                 onChange={handleInputChange}
                 placeholder="Category"
                 className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
@@ -53,8 +53,8 @@ const EditProductModal = ({
               </label>
               <input
                 type="number"
-                name="price"
-                value={editingProduct.price}
+                name="productPrices"
+                value={editingProduct.productPrices}
                 onChange={handleInputChange}
                 placeholder="Price"
                 className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
@@ -66,8 +66,8 @@ const EditProductModal = ({
               </label>
               <input
                 type="text"
-                name="unit"
-                value={editingProduct.unit}
+                name="productUnits"
+                value={editingProduct.productUnits}
                 onChange={handleInputChange}
                 placeholder="Unit"
                 className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
@@ -108,5 +108,4 @@ const EditProductModal = ({
     </Modal>
   );
 };
-
 export default EditProductModal;

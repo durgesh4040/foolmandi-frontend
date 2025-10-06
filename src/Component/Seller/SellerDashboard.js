@@ -8,15 +8,15 @@ import { pencil } from "react-icons-kit/fa/pencil";
 import EditProductModal from "./EditProductMoadal";
 import AddProductModal from "./AddProductModal";
 import { useAuth } from "../context/AuthContext";
-
 const SellerDashboard = () => {
   const location = useLocation();
-  const { username } = location.state;
+  const { sellerId } = location.state;
   const [products, setProducts] = useState([]);
   const [seller, setSeller] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [editingProduct, setEditingProduct] = useState(null);
+  const [productId,setProductId]=useState(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [email, setEmail] = useState("");
@@ -26,11 +26,11 @@ const SellerDashboard = () => {
   useEffect(() => {
     const fetchSellerData = async () => {
       try {
-        const response = await liveflowerPrice.findSellerByName(username);
+        const response = await liveflowerPrice.findSellerByName(sellerId);
         setEmail(response.data.email);
 
         setSeller(response.data);
-        setProducts(response.data.products);
+        setProducts(response.data.product);
       } catch (error) {
         setError(error.message);
       } finally {
@@ -38,19 +38,20 @@ const SellerDashboard = () => {
       }
     };
     fetchSellerData();
-  }, [username]);
+  }, [sellerId]);
 
   const handleEditProduct = (product) => {
     setEditingProduct(product);
+    setProductId(product)
     setIsEditModalOpen(true);
   };
 
   const handleSaveProduct = async () => {
     try {
       const response = await liveflowerPrice.updateProduct(
-        editingProduct.id,
+        productId,
         editingProduct,
-        user
+        
       );
       if (response.status === 200) {
         setProducts(
@@ -68,6 +69,7 @@ const SellerDashboard = () => {
   const handleDeleteProduct = async (productId) => {
     try {
       const response = await liveflowerPrice.deleteProductById(productId, user);
+      console.log(productId);
       if (response.status === 200) {
         setProducts(products.filter((product) => product.id !== productId));
       }
@@ -83,15 +85,12 @@ const SellerDashboard = () => {
       [name]: value,
     }));
   };
-
   if (loading) {
     return <p className="text-center text-gray-600">Loading seller data...</p>;
   }
-
   if (error) {
     return <p className="text-center text-red-600">Error: {error}</p>;
   }
-
   return (
     <div className="min-h-screen">
       <h1 className="text-2xl font-bold text-green-700 text-center">
@@ -145,22 +144,22 @@ const SellerDashboard = () => {
                 >
                   <div className="flex items-center space-x-4">
                     <img
-                      src={product.imageUrl}
-                      alt={product.name}
+                      src={product.image}
+                      alt={product.productNames}
                       width="50"
                       height="50"
                       className="rounded-md"
                     />
-                    <span>{product.productName}</span>
+                    <span>{product.productNames}</span>
                   </div>
                 </th>
-                <td className="px-6 py-4 font-medium">{product.category}</td>
-                <td className="px-6 py-4 font-medium">Rs {product.price}</td>
-                <td className="px-6 py-4">{product.unit}</td>
+                <td className="px-6 py-4 font-medium">{product.productCategory}</td>
+                <td className="px-6 py-4 font-medium">Rs {product.productPrices}</td>
+                <td className="px-6 py-4">{product.productUnits}</td>
                 <td className="px-6 py-4 font-medium">{product.date}</td>
                 <td className="px-6 py-4 font-medium">
                   <button
-                    onClick={() => handleEditProduct(product)}
+                    onClick={() => handleEditProduct(product._id)}
                     className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                   >
                     <Icon icon={pencil} size={22} />
@@ -169,7 +168,7 @@ const SellerDashboard = () => {
                 </td>
                 <td className="px-6 py-4 font-medium">
                   <button
-                    onClick={() => handleDeleteProduct(product.id)}
+                    onClick={() => handleDeleteProduct(product._id)}
                     className="font-medium text-red-600 dark:text-red-500 hover:underline ml-2 items-center"
                   >
                     <Icon icon={trashO} size={22} />
@@ -181,7 +180,6 @@ const SellerDashboard = () => {
           </tbody>
         </table>
       </div>
-
       <EditProductModal
         isEditModalOpen={isEditModalOpen}
         setIsEditModalOpen={setIsEditModalOpen}
@@ -192,7 +190,7 @@ const SellerDashboard = () => {
       <AddProductModal
         isModalOpen={isAddModalOpen}
         setIsModalOpen={setIsAddModalOpen}
-        email={email}
+        sellerId={sellerId}
       />
     </div>
   );

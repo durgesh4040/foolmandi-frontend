@@ -6,8 +6,6 @@ import { parseJwt } from "../misc/Helpers";
 import PasswordToggle from "../PasswordToggle";
 const SellerForm = ({ verifiedEmail }) => {
   const Auth = useAuth();
-  // const isLoggedIn = Auth.userIsAuthenticated();
-  const [username, setUserName] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [companyName, setCompanyName] = useState("");
@@ -16,6 +14,7 @@ const SellerForm = ({ verifiedEmail }) => {
   const [isError, setIsError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [email,setEmail]=useState("");
 
   const navigate = useNavigate();
 
@@ -23,9 +22,7 @@ const SellerForm = ({ verifiedEmail }) => {
     const { name, value } = e.target;
     const trimedValue = value.trim();
     switch (name) {
-      case "username":
-        setUserName(trimedValue);
-        break;
+    
       case "name":
         setName(value);
         break;
@@ -67,7 +64,6 @@ const SellerForm = ({ verifiedEmail }) => {
     setIsLoading(true);
 
     const seller = {
-      username,
       password,
       email: verifiedEmail,
       companyName,
@@ -80,12 +76,11 @@ const SellerForm = ({ verifiedEmail }) => {
       const response = await liveflowerPrice.saveSeller(seller);
 
       // Auth.userLogin(authenticatedUser);
-      if (response.status === 201) {
-        const { accessToken } = response.data;
-        const data = parseJwt(accessToken);
-        const authenticatedUser = { data, accessToken };
+  
+        const { token} = response.data;
+        const data = parseJwt(token);
+        const authenticatedUser = { data, token };
         Auth.userLogin(authenticatedUser);
-        setUserName("");
         setPassword("");
         setCompanyName("");
         setAddress("");
@@ -93,12 +88,11 @@ const SellerForm = ({ verifiedEmail }) => {
         setName("");
         setIsError(false);
         setErrorMessage("");
-
+        setEmail(verifiedEmail);
         console.log("Seller saved successfully:", response.data);
 
-        navigate("/seller-dashboard", { state: { username: username } });
-      }
-    } catch (error) {
+        navigate("/seller-dashboard", { state: { sellerId:response.data.sellerId } });
+          } catch (error) {
       if (error.response && error.response.status === 409) {
         setErrorMessage(`${error.response.data.message}`);
       } else {
@@ -125,24 +119,7 @@ const SellerForm = ({ verifiedEmail }) => {
             <h2 className="text-2xl font-bold mb-4 text-center text-green-700">
               Registration Form
             </h2>
-            <div className="mb-4">
-              <label
-                htmlFor="username"
-                className="block text-green-700 text-sm font-bold mb-2"
-              >
-                Username:
-              </label>
-              <input
-                type="text"
-                id="username"
-                name="username"
-                value={username}
-                onChange={handleInputChange}
-                placeholder="Username"
-                required
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:shadow-outline"
-              />
-            </div>
+
             <div className="mb-4">
               <label
                 htmlFor="name"
@@ -260,5 +237,4 @@ const SellerForm = ({ verifiedEmail }) => {
     </div>
   );
 };
-
 export default SellerForm;
