@@ -17,7 +17,7 @@ export default function HomePage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
-  const prodUrl="https://phoolmandi-backend-production.onrender.com"
+  const prodUrl="https://phoolmandi-backend-production.onrender.com/api"
   const apiUrl="http://localhost:3000/api"
   useEffect(() => {
     const timer = setInterval(() => {
@@ -27,7 +27,7 @@ export default function HomePage() {
   }, []);
   const fetchData = async (pageNumber) => {
     try {
-      const res = await axios.get(`${apiUrl}/live/get?page=${pageNumber}&limit=2`);
+      const res = await axios.get(`${prodUrl}/live/get?page=${pageNumber}&limit=2`);
       console.log("res data live", res.data.live);
       setData(res.data.live);
       setTotalPages(res.data.totalPages);
